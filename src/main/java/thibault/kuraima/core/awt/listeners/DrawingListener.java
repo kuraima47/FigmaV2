@@ -7,10 +7,10 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.Point2D;
 
-public class DropListener implements Listener {
+public class DrawingListener implements Listener {
     private DrawingPanel drawingPanel;
 
-    public DropListener(DrawingPanel drawingPanel) {
+    public DrawingListener(DrawingPanel drawingPanel) {
         this.drawingPanel = drawingPanel;
     }
 

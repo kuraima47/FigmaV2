@@ -1,6 +1,8 @@
 package thibault.kuraima.core.awt.components.shapes;
 
 import thibault.kuraima.core.awt.components.app.DrawingPanel;
+import thibault.kuraima.core.awt.components.menus.MenuGroup;
+import thibault.kuraima.core.components.Shape;
 
 import javax.swing.*;
 import java.awt.*;
@@ -53,6 +55,11 @@ public class Group implements ShapeAwt{
                     (int) (size.getX()),
                     (int) (size.getY()));
         }
+    }
+
+    @Override
+    public String name() {
+        return this.getClass().getSimpleName() + " " + id;
     }
 
     @Override
@@ -159,108 +166,7 @@ public class Group implements ShapeAwt{
 
     @Override
     public JPopupMenu getMenu(DrawingPanel panel) {
-        JPopupMenu popup = new JPopupMenu();
-        JMenuItem delete = new JMenuItem("Delete");
-        ImageIcon icon = new ImageIcon("src/main/resources/images/delete.png");
-        Image image = icon.getImage();
-        Image newimg = image.getScaledInstance(16, 16,  java.awt.Image.SCALE_SMOOTH);
-        icon = new ImageIcon(newimg);
-        delete.setIcon(icon);
-        delete.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                panel.deleteSelectedShape();
-            }
-        });
-        JMenuItem ungroup = new JMenuItem("unGroup");
-        ungroup.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                panel.unGroupSelectedShapes();
-            }
-        });
-        JMenuItem color = new JMenuItem("Color");
-        color.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Color newColor = JColorChooser.showDialog(null, "Choose a color", getColor());
-                setColor(newColor);
-                panel.repaint();
-            }
-        });
-        JMenuItem rotate = new JMenuItem("Rotate");
-        rotate.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JDialog d = new JDialog();
-                JLabel l3 = new JLabel("Select the rotation angle : ");
-                String defaultValue3 = String.valueOf(rotation());
-                JTextField tf3 = new JTextField(defaultValue3, defaultValue3.length());
-                JButton b = new JButton("Submit");
-                b.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        setRotation(Double.parseDouble(tf3.getText()));
-                        panel.repaint();
-                        d.dispose();
-                    }
-                });
-                JPanel p = new JPanel(new GridLayout(0, 1));
-                Box box1 = Box.createHorizontalBox();
-                box1.add(l3);
-                box1.add(tf3);
-                p.add(box1);
-                p.add(b);
-                d.add(p);
-                d.setSize(300, 100);
-                d.setLayout(new FlowLayout());
-                d.setVisible(true);
-            }
-        });
-        JMenuItem scale = new JMenuItem("Scale");
-        scale.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JDialog d = new JDialog();
-                JLabel l = new JLabel("Select the width factor : ");
-                String defaultValue = String.valueOf(size().getX());
-                JTextField tf = new JTextField(defaultValue, defaultValue.length());
-                JLabel l2 = new JLabel("Select the height factor : ");
-                String defaultValue2 = String.valueOf(size().getY());
-                JTextField tf2 = new JTextField(defaultValue2, defaultValue2.length());
-
-                JButton b = new JButton("Submit");
-                b.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        size(new Point2D.Double(Double.parseDouble(tf.getText()), Double.parseDouble(tf2.getText())));
-                        panel.repaint();
-                        d.dispose();
-                    }
-                });
-                JPanel p = new JPanel(new GridLayout(0, 1));
-                Box box1 = Box.createHorizontalBox();
-                box1.add(l);
-                box1.add(tf);
-                Box box2 = Box.createHorizontalBox();
-                box2.add(l2);
-                box2.add(tf2);
-                p.add(box1);
-                p.add(box2);
-                p.add(b);
-                d.add(p);
-                d.setSize(300, 150);
-                d.setLayout(new FlowLayout());
-                d.setVisible(true);
-            }
-        });
-
-        popup.add(delete);
-        popup.add(ungroup);
-        popup.add(color);
-        popup.add(rotate);
-        popup.add(scale);
-        return popup;
+        return new MenuGroup(panel).create();
     }
 
     @Override
@@ -353,6 +259,17 @@ public class Group implements ShapeAwt{
     @Override
     public void setRotationCenter(Point2D center) {
         rotationCenter = center;
+    }
+
+    @Override
+    public Shape clone() {
+        Shape s = null;
+        try {
+            s = (Shape) super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return s;
     }
 
 

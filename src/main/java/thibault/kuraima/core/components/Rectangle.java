@@ -3,7 +3,7 @@ package thibault.kuraima.core.components;
 import java.awt.*;
 import java.awt.geom.Point2D;
 
-public class Rectangle implements Shape {
+public abstract class Rectangle implements Shape {
     protected Point2D pos  = new Point2D.Double(0, 0);
     protected Point2D size = new Point2D.Double(1, 1);
 
@@ -20,11 +20,6 @@ public class Rectangle implements Shape {
     protected Point2D arcSize = new Point2D.Double(0, 0);
     protected double rotation = 0;
     protected Point2D rotationCenter;
-
-    public Rectangle(Point point, int i){
-        pos.setLocation(point);
-        size.setLocation(i, i);
-    }
 
 
     @Override
@@ -135,6 +130,16 @@ public class Rectangle implements Shape {
     @Override
     public void setColor(Color color) {
         this.color = color;
+    }
+
+    @Override
+    public Shape clone() {
+        try {
+            return (Shape) super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

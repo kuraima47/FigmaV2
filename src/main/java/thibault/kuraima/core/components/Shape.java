@@ -3,8 +3,9 @@ package thibault.kuraima.core.components;
 import java.awt.*;
 import java.awt.geom.Point2D;
 
-public interface Shape {
+public interface Shape extends Cloneable {
 
+    String name();
 
     Point2D size();
 
@@ -45,4 +46,6 @@ public interface Shape {
     void setRotation(double v);
 
     void setRotationCenter(Point2D center);
+
+    Shape clone();
 }

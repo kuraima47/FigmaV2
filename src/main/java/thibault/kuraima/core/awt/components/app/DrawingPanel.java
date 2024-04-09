@@ -91,7 +91,7 @@ public class DrawingPanel extends JPanel {
     public void addShape(ShapeAwt s) {
         selectedShape = s;
         selectedShape.setSelected(true);
-        String shapeName = s.getClass().getSimpleName();
+        String shapeName = s.name();
         int count = shapeCount.getOrDefault(shapeName, 0) + 1;
         s.setId(count);
         shapes.add(s);
