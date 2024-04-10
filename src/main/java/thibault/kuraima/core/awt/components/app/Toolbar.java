@@ -12,7 +12,7 @@ import java.awt.event.KeyEvent;
 
 public class Toolbar extends JToolBar{
 
-    ToolbarListener listener;
+    transient ToolbarListener listener;
 
     public Toolbar(ToolbarListener listener) {
         super();

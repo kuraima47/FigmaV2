@@ -20,9 +20,9 @@ public class DrawingPanel extends JPanel implements Serializable {
 
     private HashMap<String, Integer> shapeCount = new HashMap<>();
 
-    private JPanel shapesListPanel;
+    private transient JPanel shapesListPanel;
 
-    public App _app;
+    public transient App _app;
 
     public DrawingPanel(App app) {
         super();
@@ -167,13 +167,12 @@ public class DrawingPanel extends JPanel implements Serializable {
         return shapes;
     }
 
-    public void setAllShapes(ArrayList<ShapeAwt> shapeAwts) {
-        System.out.println("Setting all shapes");
+    public void restore(DrawingPanel backup) {
         shapes = new ArrayList<>();
-        for (ShapeAwt shape : shapeAwts) {
-            shapes.add(shape);
+        for (ShapeAwt shape : backup.getAllShapes()) {
+            shapes.add((ShapeAwt) shape.copy());
         }
+        shapeCount = backup.shapeCount;
         actualiseShapeList();
-        repaint();
     }
 }

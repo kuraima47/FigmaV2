@@ -180,6 +180,7 @@ public class RectangleAwt extends Rectangle implements ShapeAwt {
         r.setSelected(false);
         r.setDragged(true);
         r.setNew(true);
+        r.setId(id);
         return r;
     }
 

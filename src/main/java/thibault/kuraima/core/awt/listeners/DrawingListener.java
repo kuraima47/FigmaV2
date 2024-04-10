@@ -84,10 +84,12 @@ public class DrawingListener implements Listener {
         if (e.getButton() == MouseEvent.BUTTON3) {
             if (drawingPanel.getDraggedShape() != null && !drawingPanel.getDraggedShape().isNew()) {
                 drawingPanel.unselectShape();
+                drawingPanel._app.execute();
             }
         }else if (e.getButton() == MouseEvent.BUTTON1) {
             if (drawingPanel.getDraggedShape() != null && drawingPanel.getDraggedShape().isDragged()) {
                 drawingPanel.unselectShape();
+                drawingPanel._app.execute();
             }
         }
     }

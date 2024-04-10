@@ -17,7 +17,6 @@ public class History implements Serializable {
         }
         history.add(m);
         virtualSize = history.size();
-        System.out.println("History size: " + history.size());
     }
 
     public boolean undo() {
@@ -33,7 +32,7 @@ public class History implements Serializable {
         if (virtualSize == 0) {
             return null;
         }
-        virtualSize = Math.max(0, virtualSize - 1);
+        virtualSize = Math.max(0, virtualSize - 2);
         return history.get(virtualSize);
     }
 
@@ -50,8 +49,7 @@ public class History implements Serializable {
         if (virtualSize == history.size()) {
             return null;
         }
-        virtualSize = Math.min(history.size(), virtualSize + 1);
+        virtualSize = Math.min(history.size(), virtualSize + 2);
         return history.get(virtualSize - 1);
     }
-
 }

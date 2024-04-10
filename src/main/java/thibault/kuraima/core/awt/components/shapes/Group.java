@@ -288,6 +288,7 @@ public class Group implements ShapeAwt{
         g.setSelected(true);
         g.setDragged(true);
         g.setNew(true);
+        g.setId(id);
         return g;
     }
 

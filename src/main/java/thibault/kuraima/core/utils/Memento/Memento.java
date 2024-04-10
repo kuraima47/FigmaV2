@@ -13,8 +13,6 @@ public class Memento implements Serializable {
 
     public Memento(App app) {
         _app = app;
-        System.out.println("Memento created");
-        System.out.println(((AppAwt) app).drawingPanel.getAllShapes());
         try {
             _backup = app.backup();
         } catch (IOException e) {

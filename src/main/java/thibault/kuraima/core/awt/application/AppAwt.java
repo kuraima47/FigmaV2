@@ -20,10 +20,13 @@ import java.io.*;
 import java.util.Base64;
 
 public class AppAwt extends App implements Serializable {
+
     public DrawingPanel drawingPanel = new DrawingPanel(this);
     public Toolbar toolbar;
 
-    private History history;
+    public int version = 0;
+
+    private transient History history;
 
     public AppAwt() {
         if (_factory == null) {
@@ -57,19 +60,18 @@ public class AppAwt extends App implements Serializable {
 
     @Override
     public void execute() {
-        System.out.println("execute");
         history.push(new Memento(this));
     }
 
     @Override
     public void undo() {
-        if (history.undo())
+        if (history != null && history.undo())
             drawingPanel.repaint();
     }
 
     @Override
     public void redo() {
-        if (history.redo())
+        if (history != null && history.redo())
             drawingPanel.repaint();
     }
 
@@ -80,7 +82,7 @@ public class AppAwt extends App implements Serializable {
             ObjectOutputStream oos = new ObjectOutputStream(baos);
             oos.writeObject(this);
             oos.close();
-            System.out.println(Base64.getEncoder().encodeToString(baos.toByteArray()));
+            version++;
             return Base64.getEncoder().encodeToString(baos.toByteArray());
         } catch (IOException e) {
             return "";
@@ -90,16 +92,10 @@ public class AppAwt extends App implements Serializable {
     @Override
     public void restore(String backup) {
         try {
-            System.out.println("restore");
-            System.out.println(backup);
             byte[] data = Base64.getDecoder().decode(backup);
             ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(data));
             AppAwt app = (AppAwt) ois.readObject();
-            this.drawingPanel = app.drawingPanel;
-            this.drawingPanel.setAllShapes(app.drawingPanel.getAllShapes());
-            this.toolbar = app.toolbar;
-            this.history = app.history;
-            this.drawingPanel.repaint();
+            this.drawingPanel.restore(app.drawingPanel);
             ois.close();
         } catch (ClassNotFoundException e) {
             System.out.println("ClassNotFoundException occurred.");
@@ -134,7 +130,7 @@ public class AppAwt extends App implements Serializable {
 
 
     private void addShapeInToolbar() {
-                toolbar.addButton("Rectangle", e -> drawingPanel.addShape((ShapeAwt) _factory.createRectangle(100, 100, 50, 50)));
+        toolbar.addButton("Rectangle", e -> drawingPanel.addShape((ShapeAwt) _factory.createRectangle(100, 100, 50, 50)));
     }
 
 }
