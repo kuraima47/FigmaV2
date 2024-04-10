@@ -41,6 +41,7 @@ public class Toolbar extends JToolBar{
         }
         revalidate();
         repaint();
+
     }
 };
 
