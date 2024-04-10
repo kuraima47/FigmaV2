@@ -19,10 +19,10 @@ public class AppAwt extends App {
     public Toolbar toolbar;
 
     public AppAwt() {
-        createScene();
         if (_factory == null) {
             _factory = createFactory();
         }
+        createScene();
     }
 
     @Override

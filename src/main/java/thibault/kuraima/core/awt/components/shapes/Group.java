@@ -5,6 +5,7 @@ import thibault.kuraima.core.awt.components.menus.MenuGroup;
 import thibault.kuraima.core.components.Shape;
 
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicGraphicsUtils;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -270,6 +271,17 @@ public class Group implements ShapeAwt{
             e.printStackTrace();
         }
         return s;
+    }
+
+    @Override
+    public Shape copy() {
+        Group g = new Group(this.getShapes());
+        g.position(this.position());
+        g.size(this.size());
+        g.setRotation(this.rotation());
+        g.setRotationCenter(this.rotationCenter);
+        g.setColor(this.getColor());
+        return g;
     }
 
 

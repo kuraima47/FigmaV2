@@ -48,4 +48,6 @@ public interface Shape extends Cloneable {
     void setRotationCenter(Point2D center);
 
     Shape clone();
+
+    Shape copy();
 }

@@ -18,7 +18,7 @@ public class ShapeFactoryAwt implements ShapeFactory {
 
     @Override
     public Shape createShape(Shape shape) {
-        return shape.clone();
+        return shape.copy();
     }
 
 }

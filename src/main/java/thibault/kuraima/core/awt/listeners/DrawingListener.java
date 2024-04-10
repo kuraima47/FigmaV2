@@ -21,6 +21,7 @@ public class DrawingListener implements Listener {
             drawingPanel.setDraggedShape(true);
         }
         if (drawingPanel.getDraggedShape() != null) {
+            System.out.println("dragged shape :" + drawingPanel.getDraggedShape().name());
             Point2D oldPos = drawingPanel.getDraggedShape().position();
             Point2D newPos = new Point(e.getX(), e.getY());
             Point2D diff = new Point2D.Double(newPos.getX() - oldPos.getX(), newPos.getY() - oldPos.getY());
@@ -31,12 +32,12 @@ public class DrawingListener implements Listener {
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        drawingPanel.requestFocus();
-        if (drawingPanel.getNewShape() != null) {
+        if(drawingPanel.getDraggedShape() != null){
+            System.out.println("dragged shape :" + drawingPanel.getDraggedShape().name());
             Point2D oldPos = drawingPanel.getDraggedShape().position();
             Point2D newPos = new Point(e.getX(), e.getY());
             Point2D diff = new Point2D.Double(newPos.getX() - oldPos.getX(), newPos.getY() - oldPos.getY());
-            drawingPanel.getNewShape().translate(diff);
+            drawingPanel.getDraggedShape().translate(diff);
             drawingPanel.repaint();
         }
     }

@@ -171,6 +171,16 @@ public class RectangleAwt extends Rectangle implements ShapeAwt {
     }
 
     @Override
+    public Shape copy() {
+        RectangleAwt r = new RectangleAwt(pos, size);
+        r.setColor(color);
+        r.setRotation(rotation);
+        r.setRotationCenter(rotationCenter);
+        r.setRound(arcSize);
+        return r;
+    }
+
+    @Override
     public JPopupMenu getMenu(DrawingPanel panel) {
         return new MenuRectangle(panel).create();
     }
