@@ -24,7 +24,6 @@ public class Group implements ShapeAwt{
 
     private int id;
     private Color color;
-    private Point2D arcSize = new Point2D.Double(0, 0);
     private double rotation = 0;
     private Point2D rotationCenter;
 
@@ -275,12 +274,20 @@ public class Group implements ShapeAwt{
 
     @Override
     public Shape copy() {
-        Group g = new Group(this.getShapes());
-        g.position(this.position());
-        g.size(this.size());
-        g.setRotation(this.rotation());
-        g.setRotationCenter(this.rotationCenter);
-        g.setColor(this.getColor());
+        Group g = new Group();
+        for (ShapeAwt shape : shapes) {
+            g.addShape((ShapeAwt) shape.copy());
+        }
+        if (color != null) {
+            g.setColor(new Color(color.getRGB()));
+        }
+        g.setRotation(rotation);
+        g.setRotationCenter(new Point2D.Double(rotationCenter.getX(), rotationCenter.getY()));
+        g.size(new Point2D.Double(size.getX(), size.getY()));
+        g.translate(new Point2D.Double(pos.getX(), pos.getY()));
+        g.setSelected(true);
+        g.setDragged(true);
+        g.setNew(true);
         return g;
     }
 

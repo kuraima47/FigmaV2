@@ -61,7 +61,7 @@ public class ToolbarListener implements Listener {
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        Shape s = panel.getSelectedShape();
+        Shape s = panel.getDraggedShape();
         if (s != null && !s.isNew()) {
             toolbar.addButton(s.name(), new ActionListener() {
                 @Override

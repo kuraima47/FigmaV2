@@ -1,15 +1,17 @@
 package thibault.kuraima.core.awt.components.app;
 
+import thibault.kuraima.core.applications.App;
 import thibault.kuraima.core.awt.application.AwtContext;
 import thibault.kuraima.core.awt.components.shapes.Group;
 import thibault.kuraima.core.awt.components.shapes.ShapeAwt;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class DrawingPanel extends JPanel {
+public class DrawingPanel extends JPanel implements Serializable {
 
     private ShapeAwt selectedShape;
 
@@ -20,8 +22,11 @@ public class DrawingPanel extends JPanel {
 
     private JPanel shapesListPanel;
 
-    public DrawingPanel() {
+    public App _app;
+
+    public DrawingPanel(App app) {
         super();
+        _app = app;
         Graphics g = getGraphics();
         AwtContext.instance().graphics(g);
         setBorder(BorderFactory.createLineBorder(Color.black));
@@ -139,6 +144,9 @@ public class DrawingPanel extends JPanel {
 
     public void deleteSelectedShape() {
         if (selectedShape != null) {
+            selectedShape.setDragged(false);
+            selectedShape.setSelected(false);
+            selectedShape.setNew(false);
             shapes.remove(selectedShape);
             actualiseShapeList();
             repaint();
@@ -153,5 +161,19 @@ public class DrawingPanel extends JPanel {
             actualiseShapeList();
             repaint();
         }
+    }
+
+    public ArrayList<ShapeAwt> getAllShapes() {
+        return shapes;
+    }
+
+    public void setAllShapes(ArrayList<ShapeAwt> shapeAwts) {
+        System.out.println("Setting all shapes");
+        shapes = new ArrayList<>();
+        for (ShapeAwt shape : shapeAwts) {
+            shapes.add(shape);
+        }
+        actualiseShapeList();
+        repaint();
     }
 }

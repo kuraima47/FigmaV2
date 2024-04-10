@@ -16,12 +16,11 @@ public class DrawingListener implements Listener {
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        drawingPanel.requestFocus();
+        drawingPanel._app.requestFocus();
         if (drawingPanel.getSelectedShape() != null){
             drawingPanel.setDraggedShape(true);
         }
         if (drawingPanel.getDraggedShape() != null) {
-            System.out.println("dragged shape :" + drawingPanel.getDraggedShape().name());
             Point2D oldPos = drawingPanel.getDraggedShape().position();
             Point2D newPos = new Point(e.getX(), e.getY());
             Point2D diff = new Point2D.Double(newPos.getX() - oldPos.getX(), newPos.getY() - oldPos.getY());
@@ -32,8 +31,8 @@ public class DrawingListener implements Listener {
 
     @Override
     public void mouseMoved(MouseEvent e) {
+        drawingPanel.getDraggedShape();
         if(drawingPanel.getDraggedShape() != null){
-            System.out.println("dragged shape :" + drawingPanel.getDraggedShape().name());
             Point2D oldPos = drawingPanel.getDraggedShape().position();
             Point2D newPos = new Point(e.getX(), e.getY());
             Point2D diff = new Point2D.Double(newPos.getX() - oldPos.getX(), newPos.getY() - oldPos.getY());
@@ -44,12 +43,12 @@ public class DrawingListener implements Listener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        drawingPanel.requestFocus();
+        drawingPanel._app.requestFocus();
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-        drawingPanel.requestFocus();
+        drawingPanel._app.requestFocus();
         if (drawingPanel.getDraggedShape() != null) {
             drawingPanel.repaint();
         }
@@ -69,6 +68,7 @@ public class DrawingListener implements Listener {
                 drawingPanel.getNewShape().setNew(false);
                 drawingPanel.setDraggedShape(false);
                 drawingPanel.unselectShape();
+                drawingPanel._app.execute();
             }
             if (drawingPanel.getSelectedShape() == null) {
                 drawingPanel.unselectShape();
@@ -79,7 +79,7 @@ public class DrawingListener implements Listener {
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        drawingPanel.requestFocus();
+        drawingPanel._app.requestFocus();
         drawingPanel.repaint();
         if (e.getButton() == MouseEvent.BUTTON3) {
             if (drawingPanel.getDraggedShape() != null && !drawingPanel.getDraggedShape().isNew()) {
@@ -94,12 +94,12 @@ public class DrawingListener implements Listener {
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        drawingPanel.requestFocus();
+        drawingPanel._app.requestFocus();
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        drawingPanel.requestFocus();
+        drawingPanel._app.requestFocus();
     }
 
     @Override
@@ -108,9 +108,7 @@ public class DrawingListener implements Listener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_G && e.isControlDown()){
-            drawingPanel.groupSelectedShapes();
-        }
+
     }
 
     @Override

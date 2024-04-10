@@ -172,11 +172,14 @@ public class RectangleAwt extends Rectangle implements ShapeAwt {
 
     @Override
     public Shape copy() {
-        RectangleAwt r = new RectangleAwt(pos, size);
-        r.setColor(color);
+        RectangleAwt r = new RectangleAwt(new Point2D.Double(pos.getX(), pos.getY()), new Point2D.Double(size.getX(), size.getY()));
+        r.setColor(new Color(color.getRGB()));
         r.setRotation(rotation);
-        r.setRotationCenter(rotationCenter);
-        r.setRound(arcSize);
+        r.setRotationCenter(new Point2D.Double(rotationCenter.getX(), rotationCenter.getY()));
+        r.setRound(new Point2D.Double(arcSize.getX(), arcSize.getY()));
+        r.setSelected(false);
+        r.setDragged(true);
+        r.setNew(true);
         return r;
     }
 

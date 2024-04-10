@@ -2,8 +2,9 @@ package thibault.kuraima.core.components;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
+import java.io.Serializable;
 
-public interface Shape extends Cloneable {
+public interface Shape extends Cloneable, Serializable {
 
     String name();
 
