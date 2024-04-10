@@ -31,5 +31,16 @@ public class Toolbar extends JToolBar{
         add(button);
         addSeparator();
     }
+
+    public void restore(Toolbar backup) {
+        for(Component c : this.getComponents()){
+            this.remove(c);
+        }
+        for(Component c : backup.getComponents()){
+            this.add(c);
+        }
+        revalidate();
+        repaint();
+    }
 };
 

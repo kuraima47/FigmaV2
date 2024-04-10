@@ -96,6 +96,7 @@ public class AppAwt extends App implements Serializable {
             ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(data));
             AppAwt app = (AppAwt) ois.readObject();
             this.drawingPanel.restore(app.drawingPanel);
+            this.toolbar.restore(app.toolbar);
             ois.close();
         } catch (ClassNotFoundException e) {
             System.out.println("ClassNotFoundException occurred.");
