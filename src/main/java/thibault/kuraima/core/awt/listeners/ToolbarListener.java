@@ -69,6 +69,7 @@ public class ToolbarListener implements Listener {
                     Shape newShape = factory.createShape(s);
                     newShape.setNew(true);
                     panel.addShape((ShapeAwt) newShape);
+                    panel._app.execute();
                 }
             });
             panel.deleteSelectedShape();
