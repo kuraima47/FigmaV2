@@ -5,6 +5,7 @@ import thibault.kuraima.core.awt.application.AppAwt;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 
 public class AppListener implements Listener{
 
@@ -26,9 +27,17 @@ public class AppListener implements Listener{
             _app.execute();
         }
         if (e.getKeyCode() == KeyEvent.VK_Z && e.isControlDown()){
-            _app.undo();
+            try {
+                _app.undo();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         } else if (e.getKeyCode() == KeyEvent.VK_Y && e.isControlDown()) {
-            _app.redo();
+            try {
+                _app.redo();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         }
     }
 

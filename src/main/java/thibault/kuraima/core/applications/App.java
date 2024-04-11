@@ -7,20 +7,19 @@ import java.io.IOException;
 
 public abstract class App extends JFrame {
 
-    protected ShapeFactory _factory = null;
+    public ShapeFactory _factory = null;
 
     public abstract void run();
 
     protected abstract void createScene();
 
-    public abstract void undo();
+    public abstract void undo() throws IOException;
 
-    public abstract void redo();
+    public abstract void redo() throws IOException;
 
-    public abstract String backup() throws IOException;
+    public abstract String backup(String Path, String type) throws IOException;
 
-    public abstract void restore(String backup);
+    public abstract void restore(String backup, String type, String Path) throws IOException;
 
-    public void execute() {
-    }
+    public abstract void execute();
 }

@@ -1,8 +1,11 @@
 package thibault.kuraima.core.awt.listeners;
 
 
+import thibault.kuraima.core.awt.application.AppAwt;
+import thibault.kuraima.core.awt.components.app.CustomActionListener;
 import thibault.kuraima.core.awt.components.app.DrawingPanel;
 import thibault.kuraima.core.awt.components.app.Toolbar;
+import thibault.kuraima.core.awt.components.buttons.ShapeButton;
 import thibault.kuraima.core.awt.components.shapes.ShapeAwt;
 import thibault.kuraima.core.components.Shape;
 import thibault.kuraima.core.utils.AbstractFactory.ShapeFactory;
@@ -11,11 +14,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
 
 public class ToolbarListener implements Listener {
 
     public Toolbar toolbar;
-    DrawingPanel panel;
+    public DrawingPanel panel;
 
     ShapeFactory factory;
 
@@ -63,15 +68,13 @@ public class ToolbarListener implements Listener {
     public void mouseEntered(MouseEvent e) {
         Shape s = panel.getDraggedShape();
         if (s != null && !s.isNew()) {
-            toolbar.addButton(s.name(), new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    Shape newShape = factory.createShape(s);
-                    newShape.setNew(true);
-                    panel.addShape((ShapeAwt) newShape);
-                    panel._app.execute();
-                }
-            });
+            toolbar.addButton(new ShapeButton(s.name(), (ShapeAwt) factory.createShape(s), (AppAwt) panel._app));
+            File file = new File(System.getProperty("user.dir") + "/src/main/resources/storage/awt/toolbar.ser");
+            try {
+                panel._app.backup(file.getAbsolutePath(), "Toolbar");
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
             panel.deleteSelectedShape();
         }
     }

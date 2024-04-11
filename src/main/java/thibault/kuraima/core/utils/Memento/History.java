@@ -2,6 +2,7 @@ package thibault.kuraima.core.utils.Memento;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +20,7 @@ public class History implements Serializable {
         virtualSize = history.size();
     }
 
-    public boolean undo() {
+    public boolean undo() throws IOException {
         Memento m = getUndo();
         if (m == null) {
             return false;
@@ -36,7 +37,7 @@ public class History implements Serializable {
         return history.get(virtualSize);
     }
 
-    public boolean redo() {
+    public boolean redo() throws IOException {
         Memento m = getRedo();
         if (m == null) {
             return false;

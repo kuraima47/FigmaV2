@@ -14,13 +14,13 @@ public class Memento implements Serializable {
     public Memento(App app) {
         _app = app;
         try {
-            _backup = app.backup();
+            _backup = app.backup(null, null);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void restore() {
-        _app.restore(_backup);
+    public void restore() throws IOException {
+        _app.restore(_backup, null, null);
     }
 }

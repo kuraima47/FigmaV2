@@ -1,7 +1,11 @@
 package thibault.kuraima.core.awt.application;
 
 import thibault.kuraima.core.applications.App;
+import thibault.kuraima.core.awt.components.app.CustomActionListener;
 import thibault.kuraima.core.awt.components.app.DrawingPanel;
+import thibault.kuraima.core.awt.components.buttons.LoadButton;
+import thibault.kuraima.core.awt.components.buttons.SaveButton;
+import thibault.kuraima.core.awt.components.buttons.ShapeButton;
 import thibault.kuraima.core.awt.components.shapes.ShapeAwt;
 import thibault.kuraima.core.awt.listeners.AppListener;
 import thibault.kuraima.core.awt.listeners.DrawingListener;
@@ -16,6 +20,7 @@ import thibault.kuraima.core.utils.Memento.Memento;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.io.*;
 import java.util.Base64;
 
@@ -38,6 +43,7 @@ public class AppAwt extends App implements Serializable {
         addKeyListener(appListener);
         requestFocus();
         execute();
+        restoreToolbar();
     }
 
     @Override
@@ -53,6 +59,7 @@ public class AppAwt extends App implements Serializable {
         createPanel();
         addShapeInToolbar();
         addComponent();
+        addSaveLoadInToolbar();
         createListeners();
         pack();
         setVisible(true);
@@ -64,47 +71,91 @@ public class AppAwt extends App implements Serializable {
     }
 
     @Override
-    public void undo() {
+    public void undo() throws IOException {
         if (history != null && history.undo())
             drawingPanel.repaint();
     }
 
     @Override
-    public void redo() {
+    public void redo() throws IOException {
         if (history != null && history.redo())
             drawingPanel.repaint();
     }
 
     @Override
-    public String backup() {
+    public String backup(String Path, String type) {
         try {
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ObjectOutputStream oos = new ObjectOutputStream(baos);
-            oos.writeObject(this);
-            oos.close();
-            version++;
-            return Base64.getEncoder().encodeToString(baos.toByteArray());
+            if(Path == null) {
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                ObjectOutputStream oos = new ObjectOutputStream(baos);
+                if (type == null) {
+                    oos.writeObject(this);
+                } else if (type.equals("Panel")) {
+                    oos.writeObject(drawingPanel);
+                } else if (type.equals("Toolbar")) {
+                    oos.writeObject(toolbar);
+                }
+                oos.close();
+                version++;
+                return Base64.getEncoder().encodeToString(baos.toByteArray());
+            }else{
+                FileOutputStream fos = new FileOutputStream(Path);
+                ObjectOutputStream oos = new ObjectOutputStream(fos);
+                if (type.equals("Panel")) {
+                    oos.writeObject(drawingPanel);
+                } else if (type.equals("Toolbar")) {
+                    oos.writeObject(toolbar);
+                } else {
+                    oos.writeObject(this);
+                }
+                oos.close();
+                version++;
+                return "";
+            }
         } catch (IOException e) {
             return "";
         }
     }
 
     @Override
-    public void restore(String backup) {
+    public void restore(String backup, String type, String Path) {
         try {
-            byte[] data = Base64.getDecoder().decode(backup);
-            ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(data));
-            AppAwt app = (AppAwt) ois.readObject();
-            this.drawingPanel.restore(app.drawingPanel);
-            this.toolbar.restore(app.toolbar);
-            ois.close();
+            if (Path == null) {
+                byte[] data = Base64.getDecoder().decode(backup);
+                ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(data));
+                AppAwt app = (AppAwt) ois.readObject();
+                if (type.equals("Panel")) {
+                    this.drawingPanel.restore(app.drawingPanel);
+                } else if (type.equals("Toolbar")) {
+                    this.toolbar.restore(app.toolbar);
+                } else {
+                    this.drawingPanel.restore(app.drawingPanel);
+                    this.toolbar.restore(app.toolbar);
+                }
+                ois.close();
+            }else{
+                FileInputStream fis = new FileInputStream(Path);
+                ObjectInputStream ois = new ObjectInputStream(fis);
+
+                if (type.equals("Panel")) {
+                    DrawingPanel panel = (DrawingPanel) ois.readObject();
+                    this.drawingPanel.restore(panel);
+                } else if (type.equals("Toolbar")) {
+                    Toolbar tool = (Toolbar) ois.readObject();
+                    this.toolbar.restore(tool);
+                } else {
+                    AppAwt app = (AppAwt) ois.readObject();
+                    this.drawingPanel.restore(app.drawingPanel);
+                    this.toolbar.restore(app.toolbar);
+                }
+                ois.close();
+            }
         } catch (ClassNotFoundException e) {
             System.out.println("ClassNotFoundException occurred.");
         } catch (IOException e) {
-            System.out.println("IOException occurred.");
+            System.out.println("IOException occurred : " + e.getMessage());
         }
     }
-
 
     protected ShapeFactory createFactory() {
         return new ShapeFactoryAwt();
@@ -129,9 +180,22 @@ public class AppAwt extends App implements Serializable {
         drawingPanel.requestFocusInWindow();
     }
 
+    private void addSaveLoadInToolbar(){
+        toolbar.addButton(new SaveButton("SavePanel", this));
+        toolbar.addButton(new LoadButton("LoadPanel", this));
+    }
+
+
 
     private void addShapeInToolbar() {
-        toolbar.addButton("Rectangle", e -> drawingPanel.addShape((ShapeAwt) _factory.createRectangle(100, 100, 50, 50)));
+        toolbar.addButton(new ShapeButton("Rectangle", (ShapeAwt) _factory.createRectangle(100, 100, 50, 50), this));
+    }
+
+    private void restoreToolbar(){
+        File file = new File(System.getProperty("user.dir") + "/src/main/resources/storage/awt/toolbar.ser");
+        if (file.exists()) {
+            restore(null, "Toolbar", System.getProperty("user.dir") + "/src/main/resources/storage/awt/toolbar.ser");
+        }
     }
 
 }

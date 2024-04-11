@@ -1,6 +1,7 @@
 package thibault.kuraima.core.utils.AbstractFactory;
 
 import thibault.kuraima.core.awt.components.shapes.RectangleAwt;
+import thibault.kuraima.core.awt.components.shapes.ShapeAwt;
 import thibault.kuraima.core.components.Rectangle;
 import thibault.kuraima.core.components.Shape;
 
@@ -17,8 +18,10 @@ public class ShapeFactoryAwt implements ShapeFactory {
     }
 
     @Override
-    public Shape createShape(Shape shape) {
-        return shape.copy();
+    public ShapeAwt createShape(Shape shape) {
+        ShapeAwt s = (ShapeAwt) shape.copy();
+        s.setNew(true);
+        return s;
     }
 
 }
