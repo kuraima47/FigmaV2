@@ -123,30 +123,33 @@ public class AppAwt extends App implements Serializable {
             if (Path == null) {
                 byte[] data = Base64.getDecoder().decode(backup);
                 ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(data));
-                AppAwt app = (AppAwt) ois.readObject();
-                if (type.equals("Panel")) {
-                    this.drawingPanel.restore(app.drawingPanel);
-                } else if (type.equals("Toolbar")) {
-                    this.toolbar.restore(app.toolbar);
-                } else {
+                if (type == null){
+                    AppAwt app = (AppAwt) ois.readObject();
                     this.drawingPanel.restore(app.drawingPanel);
                     this.toolbar.restore(app.toolbar);
                 }
-                ois.close();
-            }else{
-                FileInputStream fis = new FileInputStream(Path);
-                ObjectInputStream ois = new ObjectInputStream(fis);
-
-                if (type.equals("Panel")) {
+                else if (type.equals("Panel")) {
                     DrawingPanel panel = (DrawingPanel) ois.readObject();
                     this.drawingPanel.restore(panel);
                 } else if (type.equals("Toolbar")) {
                     Toolbar tool = (Toolbar) ois.readObject();
                     this.toolbar.restore(tool);
-                } else {
+                }
+                ois.close();
+            }else{
+                FileInputStream fis = new FileInputStream(Path);
+                ObjectInputStream ois = new ObjectInputStream(fis);
+                if (type == null){
                     AppAwt app = (AppAwt) ois.readObject();
                     this.drawingPanel.restore(app.drawingPanel);
                     this.toolbar.restore(app.toolbar);
+                }
+                else if (type.equals("Panel")) {
+                    DrawingPanel panel = (DrawingPanel) ois.readObject();
+                    this.drawingPanel.restore(panel);
+                } else if (type.equals("Toolbar")) {
+                    Toolbar tool = (Toolbar) ois.readObject();
+                    this.toolbar.restore(tool);
                 }
                 ois.close();
             }
