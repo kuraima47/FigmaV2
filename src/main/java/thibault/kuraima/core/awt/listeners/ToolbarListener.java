@@ -69,7 +69,7 @@ public class ToolbarListener implements Listener {
         Shape s = panel.getDraggedShape();
         if (s != null && !s.isNew()) {
             toolbar.addButton(new ShapeButton(s.name(), (ShapeAwt) factory.createShape(s), (AppAwt) panel._app));
-            File file = new File(System.getProperty("user.dir") + "/src/main/resources/storage/awt/toolbar.ser");
+            File file = new File(System.getProperty("user.dir") + "/toolbar.ser");
             try {
                 panel._app.backup(file.getAbsolutePath(), "Toolbar");
             } catch (IOException ex) {

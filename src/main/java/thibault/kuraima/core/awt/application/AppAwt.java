@@ -57,9 +57,9 @@ public class AppAwt extends App implements Serializable {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
         createPanel();
+        addSaveLoadInToolbar();
         addShapeInToolbar();
         addComponent();
-        addSaveLoadInToolbar();
         createListeners();
         pack();
         setVisible(true);
@@ -192,9 +192,9 @@ public class AppAwt extends App implements Serializable {
     }
 
     private void restoreToolbar(){
-        File file = new File(System.getProperty("user.dir") + "/src/main/resources/storage/awt/toolbar.ser");
+        File file = new File(System.getProperty("user.dir") + "/toolbar.ser");
         if (file.exists()) {
-            restore(null, "Toolbar", System.getProperty("user.dir") + "/src/main/resources/storage/awt/toolbar.ser");
+            restore(null, "Toolbar", file.getAbsolutePath());
         }
     }
 
