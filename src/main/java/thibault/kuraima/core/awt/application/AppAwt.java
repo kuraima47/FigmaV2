@@ -101,12 +101,12 @@ public class AppAwt extends App implements Serializable {
             }else{
                 FileOutputStream fos = new FileOutputStream(Path);
                 ObjectOutputStream oos = new ObjectOutputStream(fos);
-                if (type.equals("Panel")) {
+                if (type == null) {
+                    oos.writeObject(this);
+                } else if (type.equals("Panel")) {
                     oos.writeObject(drawingPanel);
                 } else if (type.equals("Toolbar")) {
                     oos.writeObject(toolbar);
-                } else {
-                    oos.writeObject(this);
                 }
                 oos.close();
                 version++;
