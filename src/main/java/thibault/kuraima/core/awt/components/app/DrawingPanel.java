@@ -77,7 +77,7 @@ public class DrawingPanel extends JPanel implements Serializable {
     public void unselectShape() {
         for (ShapeAwt shape : shapes) {
             if (shape.isSelected()) {
-                shape.setSelected(false);
+                shape.unSelect();
                 shape.setDragged(false);
             }
         }

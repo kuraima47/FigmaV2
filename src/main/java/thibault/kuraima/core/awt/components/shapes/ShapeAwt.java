@@ -14,4 +14,6 @@ public interface ShapeAwt extends Shape {
 
     JPopupMenu getMenu(DrawingPanel panel);
 
+    void unSelect();
+
 }

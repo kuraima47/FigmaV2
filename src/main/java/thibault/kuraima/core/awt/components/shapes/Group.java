@@ -69,21 +69,32 @@ public class Group implements ShapeAwt{
 
     @Override
     public ShapeAwt size(Point2D vec) {
+        if (size.getX() == 0 || size.getY() == 0) {
+            throw new IllegalArgumentException("Original size dimensions must be non-zero");
+        }
+
         double scaleX = vec.getX() / size.getX();
         double scaleY = vec.getY() / size.getY();
         size = vec;
         Point2D refPoint = position();
+
         for (ShapeAwt shape : shapes) {
-            Point2D currentPosition = shape.position();
-            Point2D currentSize = shape.size();
-            Point2D newPosition = new Point((int) (refPoint.getX() + (currentPosition.getX() - refPoint.getX()) * scaleX),
-                    (int) (refPoint.getY() + (currentPosition.getY() - refPoint.getY()) * scaleY));
-            Point2D newSize = new Point((int) (currentSize.getX() * scaleX), (int) (currentSize.getY() * scaleY));
+            double newWidth = shape.size().getX() * scaleX;
+            double newHeight = shape.size().getY() * scaleY;
+            Point2D newSize = new Point2D.Double(newWidth, newHeight);
+            double dx = (shape.position().getX() - refPoint.getX()) * scaleX;
+            double dy = (shape.position().getY() - refPoint.getY()) * scaleY;
+            Point2D newPos = new Point2D.Double(refPoint.getX() + dx, refPoint.getY() + dy);
             shape.size(newSize);
-            shape.position(newPosition);
+            Point2D oldPos = shape.position();
+            Point2D diff = new Point2D.Double(newPos.getX() - oldPos.getX(), newPos.getY() - oldPos.getY());
+            shape.translate(diff);
         }
+
         return this;
     }
+
+
 
     @Override
     public Point2D position() {
@@ -167,6 +178,14 @@ public class Group implements ShapeAwt{
     @Override
     public JPopupMenu getMenu(DrawingPanel panel) {
         return new MenuGroup(panel).create();
+    }
+
+    @Override
+    public void unSelect() {
+        selected = false;
+        for (ShapeAwt shape : shapes) {
+            shape.unSelect();
+        }
     }
 
     @Override
@@ -282,9 +301,14 @@ public class Group implements ShapeAwt{
             g.setColor(new Color(color.getRGB()));
         }
         g.setRotation(rotation);
-        g.setRotationCenter(new Point2D.Double(rotationCenter.getX(), rotationCenter.getY()));
+        if (rotationCenter != null) {
+            g.setRotationCenter(new Point2D.Double(rotationCenter.getX(), rotationCenter.getY()));
+        }
         g.size(new Point2D.Double(size.getX(), size.getY()));
-        g.translate(new Point2D.Double(pos.getX(), pos.getY()));
+        Point2D oldPos = g.position();
+        Point2D newPos = new Point2D.Double(pos.getX(), pos.getY());
+        Point2D diff = new Point2D.Double(newPos.getX() - oldPos.getX(), newPos.getY() - oldPos.getY());
+        g.translate(diff);
         g.setSelected(true);
         g.setDragged(true);
         g.setNew(true);

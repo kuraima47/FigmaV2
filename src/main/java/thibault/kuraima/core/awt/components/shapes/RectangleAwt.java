@@ -25,7 +25,12 @@ public class RectangleAwt extends Rectangle implements ShapeAwt {
     @Override
     public void draw(Graphics2D g) {
         AffineTransform old = g.getTransform();
-        g.rotate(Math.toRadians(rotation), rotationCenter.getX(), rotationCenter.getY());
+        if (rotationCenter != null) {
+            g.rotate(Math.toRadians(rotation), rotationCenter.getX(), rotationCenter.getY());
+        }
+        else {
+            g.rotate(Math.toRadians(rotation), pos.getX(), pos.getY());
+        }
         g.setColor(color);
         g.fillRoundRect((int)(pos.getX() - size.getX()/2),
                 (int)(pos.getY() - size.getY()/2),
@@ -172,10 +177,13 @@ public class RectangleAwt extends Rectangle implements ShapeAwt {
 
     @Override
     public Shape copy() {
-        RectangleAwt r = new RectangleAwt(new Point2D.Double(pos.getX(), pos.getY()), new Point2D.Double(size.getX(), size.getY()));
+        RectangleAwt r = new RectangleAwt(
+                new Point2D.Double(pos.getX(), pos.getY()),
+                new Point2D.Double(size.getX(), size.getY())
+        );
         r.setColor(new Color(color.getRGB()));
         r.setRotation(rotation);
-        if (rotationCenter != null){
+        if (rotationCenter != null) {
             r.setRotationCenter(new Point2D.Double(rotationCenter.getX(), rotationCenter.getY()));
         }
         r.setRound(new Point2D.Double(arcSize.getX(), arcSize.getY()));
@@ -189,5 +197,10 @@ public class RectangleAwt extends Rectangle implements ShapeAwt {
     @Override
     public JPopupMenu getMenu(DrawingPanel panel) {
         return new MenuRectangle(panel).create();
+    }
+
+    @Override
+    public void unSelect() {
+        selected = false;
     }
 }

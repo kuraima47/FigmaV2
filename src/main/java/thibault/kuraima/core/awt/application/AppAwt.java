@@ -1,7 +1,6 @@
 package thibault.kuraima.core.awt.application;
 
 import thibault.kuraima.core.applications.App;
-import thibault.kuraima.core.awt.components.app.CustomActionListener;
 import thibault.kuraima.core.awt.components.app.DrawingPanel;
 import thibault.kuraima.core.awt.components.buttons.LoadButton;
 import thibault.kuraima.core.awt.components.buttons.SaveButton;
@@ -9,10 +8,8 @@ import thibault.kuraima.core.awt.components.buttons.ShapeButton;
 import thibault.kuraima.core.awt.components.shapes.ShapeAwt;
 import thibault.kuraima.core.awt.listeners.AppListener;
 import thibault.kuraima.core.awt.listeners.DrawingListener;
-import thibault.kuraima.core.awt.components.shapes.RectangleAwt;
 import thibault.kuraima.core.awt.components.app.Toolbar;
 import thibault.kuraima.core.awt.listeners.ToolbarListener;
-import thibault.kuraima.core.components.Shape;
 import thibault.kuraima.core.utils.AbstractFactory.ShapeFactory;
 import thibault.kuraima.core.utils.AbstractFactory.ShapeFactoryAwt;
 import thibault.kuraima.core.utils.Memento.History;
@@ -20,7 +17,6 @@ import thibault.kuraima.core.utils.Memento.Memento;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.io.*;
 import java.util.Base64;
 
