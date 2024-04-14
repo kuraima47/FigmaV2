@@ -2,6 +2,7 @@ package thibault.kuraima.core.awt.application;
 
 import thibault.kuraima.core.applications.App;
 import thibault.kuraima.core.awt.components.app.DrawingPanel;
+import thibault.kuraima.core.awt.components.buttons.DeleteButton;
 import thibault.kuraima.core.awt.components.buttons.LoadButton;
 import thibault.kuraima.core.awt.components.buttons.SaveButton;
 import thibault.kuraima.core.awt.components.buttons.ShapeButton;
@@ -168,7 +169,11 @@ public class AppAwt extends App implements Serializable {
     }
 
     private void addComponent() {
-        add(toolbar, BorderLayout.PAGE_START);
+        JPanel topPanel = new JPanel();
+        topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
+        topPanel.add(toolbar);
+        topPanel.add(new DeleteButton("Delete", this));
+        add(topPanel, BorderLayout.PAGE_START);
         add(drawingPanel.getShapeList(), BorderLayout.WEST);
         add(drawingPanel, BorderLayout.CENTER);
     }
@@ -183,8 +188,6 @@ public class AppAwt extends App implements Serializable {
         toolbar.addButton(new SaveButton("SavePanel", this));
         toolbar.addButton(new LoadButton("LoadPanel", this));
     }
-
-
 
     private void addShapeInToolbar() {
         toolbar.addButton(new ShapeButton("Rectangle", (ShapeAwt) _factory.createRectangle(100, 100, 50, 50), this));

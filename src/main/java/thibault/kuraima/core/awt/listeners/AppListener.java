@@ -2,9 +2,12 @@ package thibault.kuraima.core.awt.listeners;
 
 import thibault.kuraima.core.applications.App;
 import thibault.kuraima.core.awt.application.AppAwt;
+import thibault.kuraima.core.awt.components.app.DrawingPanel;
 
+import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.io.IOException;
 
 public class AppListener implements Listener{
@@ -25,8 +28,7 @@ public class AppListener implements Listener{
         if (e.getKeyCode() == KeyEvent.VK_G && e.isControlDown()){
             ((AppAwt)_app).drawingPanel.groupSelectedShapes();
             _app.execute();
-        }
-        if (e.getKeyCode() == KeyEvent.VK_Z && e.isControlDown()){
+        } else if (e.getKeyCode() == KeyEvent.VK_Z && e.isControlDown()){
             try {
                 _app.undo();
             } catch (IOException ex) {
@@ -38,6 +40,52 @@ public class AppListener implements Listener{
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
+        } else if (e.getKeyCode() == KeyEvent.VK_S && e.isControlDown()) {
+            try {
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("SER files", "ser"));
+                fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
+                int result = fileChooser.showSaveDialog(null);
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    File file = fileChooser.getSelectedFile();
+                    String filePath = file.getAbsolutePath();
+                    if (!filePath.endsWith(".ser")) {
+                        filePath += ".ser";
+                    }
+                    _app.backup(filePath, "Panel");
+                }
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        } else if (e.getKeyCode() == KeyEvent.VK_O && e.isControlDown()) {
+            try {
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("SER files", "ser"));
+                fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
+                int result = fileChooser.showOpenDialog(null);
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    File file = fileChooser.getSelectedFile();
+                    String filePath = file.getAbsolutePath();
+                    if (!filePath.endsWith(".ser")) {
+                        filePath += ".ser";
+                    }
+                    _app.restore(null, "Panel", filePath);
+                }
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        } else if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+            ((AppAwt) _app).drawingPanel.deleteSelectedShape();
+            _app.execute();
+        } else if (e.getKeyCode() == KeyEvent.VK_D) {
+            ((AppAwt) _app).drawingPanel.duplicateSelectedShape();
+            _app.execute();
+        } else if (e.getKeyCode() == KeyEvent.VK_C && e.isControlDown()) {
+            ((AppAwt) _app).drawingPanel.copySelectedShape();
+            _app.execute();
+        } else if (e.getKeyCode() == KeyEvent.VK_V && e.isControlDown()) {
+            ((AppAwt) _app).drawingPanel.pasteSelectedShape();
+            _app.execute();
         }
     }
 

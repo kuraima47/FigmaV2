@@ -24,6 +24,8 @@ public class DrawingPanel extends JPanel implements Serializable {
 
     public transient App _app;
 
+    public transient ShapeAwt copiedShape;
+
     public DrawingPanel(App app) {
         super();
         _app = app;
@@ -174,5 +176,31 @@ public class DrawingPanel extends JPanel implements Serializable {
         }
         shapeCount = backup.shapeCount;
         actualiseShapeList();
+    }
+
+    public void duplicateSelectedShape() {
+        if (selectedShape != null) {
+            ShapeAwt shape = (ShapeAwt) selectedShape.copy();
+            shape.setNew(true);
+            shape.translate(new Point(25, 25));
+            addShape(shape);
+            actualiseShapeList();
+            repaint();
+        }
+    }
+
+    public void copySelectedShape() {
+        copiedShape = selectedShape;
+    }
+
+    public void pasteSelectedShape() {
+        if (copiedShape != null) {
+            ShapeAwt shape = (ShapeAwt) copiedShape.copy();
+            shape.setNew(true);
+            shape.translate(new Point(25, 25));
+            addShape(shape);
+            actualiseShapeList();
+            repaint();
+        }
     }
 }

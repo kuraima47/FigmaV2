@@ -73,6 +73,7 @@ public class ToolbarListener implements Listener {
                 throw new RuntimeException(ex);
             }
             panel.deleteSelectedShape();
+            panel._app.execute();
         }
     }
 
