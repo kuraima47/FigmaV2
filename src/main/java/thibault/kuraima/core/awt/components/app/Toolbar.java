@@ -26,12 +26,12 @@ public class Toolbar extends JToolBar{
     }
 
     public void addButton(Button button) {
-        if (getComponents().length > 6) {
+        if (getComponents().length > 4) {
             remove(getComponents().length - 1);
         }
         add(button);
         addSeparator();
-        if (getComponents().length > 6) {
+        if (getComponents().length > 4) {
             add(Box.createHorizontalGlue());
         }
     }
