@@ -6,7 +6,7 @@ import thibault.kuraima.core.awt.components.buttons.DeleteButton;
 import thibault.kuraima.core.awt.components.buttons.LoadButton;
 import thibault.kuraima.core.awt.components.buttons.SaveButton;
 import thibault.kuraima.core.awt.components.buttons.ShapeButton;
-import thibault.kuraima.core.awt.components.shapes.ExagoneAwt;
+import thibault.kuraima.core.awt.components.shapes.PolygonAwt;
 import thibault.kuraima.core.awt.components.shapes.ShapeAwt;
 import thibault.kuraima.core.awt.listeners.AppListener;
 import thibault.kuraima.core.awt.listeners.DrawingListener;
@@ -190,7 +190,7 @@ public class AppAwt extends App implements Serializable {
 
     private void addShapeInToolbar() {
         toolbar.addButton(new ShapeButton("Rectangle", (ShapeAwt) _factory.createRectangle(100, 100, 50, 50), this));
-        toolbar.addButton(new ShapeButton("Exagone", _factory.createShape(new ExagoneAwt(new Point(100, 100), new Point(50, 50))), this));
+        toolbar.addButton(new ShapeButton("Exagone", _factory.createShape(new PolygonAwt(new Point(100, 100), 28)), this));
     }
 
     private void restoreToolbar(){

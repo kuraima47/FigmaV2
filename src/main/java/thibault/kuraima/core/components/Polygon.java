@@ -3,7 +3,7 @@ package thibault.kuraima.core.components;
 import java.awt.*;
 import java.awt.geom.Point2D;
 
-public abstract class Exagone implements Shape {
+public abstract class Polygon implements Shape {
     protected Point2D pos  = new Point2D.Double(0, 0);
     protected Point2D size = new Point2D.Double(1, 1);
 
@@ -23,6 +23,8 @@ public abstract class Exagone implements Shape {
     protected Point2D arcSize = new Point2D.Double(0, 0);
     protected double rotation = 0;
     protected Point2D rotationCenter;
+    public int[] xPoints;
+    public int[] yPoints;
 
 
     @Override
@@ -32,13 +34,21 @@ public abstract class Exagone implements Shape {
 
     @Override
     public Shape size(Point2D vec) {
-        double currentWidth = sidesLength * 2;
-        double currentHeight = sidesLength * Math.sqrt(3);
-        double scaleFactorWidth = vec.getX() / currentWidth;
-        double scaleFactorHeight = vec.getY() / currentHeight;
-        double scaleFactor = Math.min(scaleFactorWidth, scaleFactorHeight);
-        sidesLength *= (int) scaleFactor;
+        double scale = (vec.getX() + vec.getY()) / 2;  // Calcul d'une échelle moyenne
+        this.sidesLength *= scale;  // Mettre à jour la longueur des côtés proportionnellement
+        updateVertices();  // Mettre à jour les sommets
         return this;
+    }
+
+    private void updateVertices() {
+        if (xPoints == null || xPoints.length != sides) {
+            xPoints = new int[sides];
+            yPoints = new int[sides];
+        }
+        for (int i = 0; i < sides; i++) {
+            xPoints[i] = (int) ((int) pos.getX() + sidesLength * Math.cos(2 * Math.PI * i / sides));
+            yPoints[i] = (int) ((int) pos.getY() + sidesLength * Math.sin(2 * Math.PI * i / sides));
+        }
     }
 
     @Override

@@ -2,7 +2,7 @@ package thibault.kuraima.core.awt.components.shapes;
 
 import thibault.kuraima.core.awt.components.app.DrawingPanel;
 import thibault.kuraima.core.awt.components.menus.MenuRectangle;
-import thibault.kuraima.core.components.Exagone;
+import thibault.kuraima.core.components.Polygon;
 import thibault.kuraima.core.components.Shape;
 
 import javax.swing.*;
@@ -11,11 +11,13 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.Arrays;
 
-public class ExagoneAwt extends Exagone implements ShapeAwt{
-    public ExagoneAwt(Point2D point, Point2D size) {
+public class PolygonAwt extends Polygon implements ShapeAwt{
+
+    public PolygonAwt(Point2D point, int lenghtSide) {
         position(point);
-        size(size);
+        sidesLength = lenghtSide;
     }
 
     @Override
@@ -23,31 +25,30 @@ public class ExagoneAwt extends Exagone implements ShapeAwt{
         AffineTransform old = g.getTransform();
         if (rotationCenter != null) {
             g.rotate(Math.toRadians(rotation), rotationCenter.getX(), rotationCenter.getY());
-        }
-        else {
+        } else {
             g.rotate(Math.toRadians(rotation), pos.getX(), pos.getY());
         }
         g.setColor(color);
-        int[] x = new int[sides];
-        int[] y = new int[sides];
+        xPoints = new int[sides];
+        yPoints = new int[sides];
         for (int i = 0; i < sides; i++) {
-            x[i] = (int) (pos.getX() + sidesLength * Math.cos(2 * Math.PI * i / sides));
-            y[i] = (int) (pos.getY() + sidesLength * Math.sin(2 * Math.PI * i / sides));
+            xPoints[i] = (int) (pos.getX() + sidesLength * Math.cos(2 * Math.PI * i / sides));
+            yPoints[i] = (int) (pos.getY() + sidesLength * Math.sin(2 * Math.PI * i / sides));
         }
-
-        g.fillPolygon(x, y, sides);
-        drawSelect(g);
+        g.fillPolygon(xPoints, yPoints, sides);
+        drawSelect(g, xPoints, yPoints);
         g.setTransform(old);
     }
 
-    public void drawSelect(Graphics2D g) {
+    private void drawSelect(Graphics2D g, int[] x, int[] y) {
         if (selected) {
             g.setColor(Color.BLUE);
             g.setStroke(new BasicStroke(2));
-            g.drawRect((int) (pos.getX() - size.getX() / 2),
-                    (int) (pos.getY() - size.getY() / 2),
-                    (int) (size.getX()),
-                    (int) (size.getY()));
+            int minX = Arrays.stream(x).min().getAsInt();
+            int maxX = Arrays.stream(x).max().getAsInt();
+            int minY = Arrays.stream(y).min().getAsInt();
+            int maxY = Arrays.stream(y).max().getAsInt();
+            g.drawRect(minX, minY, maxX - minX, maxY - minY);
         }
     }
 
@@ -79,12 +80,24 @@ public class ExagoneAwt extends Exagone implements ShapeAwt{
     public boolean contains(int x, int y) {
         double translatedX = x - rotationCenter.getX();
         double translatedY = y - rotationCenter.getY();
-        double unrotatedX = translatedX * Math.cos(-rotation) - translatedY * Math.sin(-rotation);
-        double unrotatedY = translatedX * Math.sin(-rotation) + translatedY * Math.cos(-rotation);
+        double unrotatedX = translatedX * Math.cos(-Math.toRadians(rotation)) - translatedY * Math.sin(-Math.toRadians(rotation));
+        double unrotatedY = translatedX * Math.sin(-Math.toRadians(rotation)) + translatedY * Math.cos(-Math.toRadians(rotation));
         unrotatedX += rotationCenter.getX();
         unrotatedY += rotationCenter.getY();
-        return unrotatedX >= pos.getX() - size.getX() / 2 && unrotatedX <= pos.getX() + size.getX() / 2
-                && unrotatedY >= pos.getY() - size.getY() / 2 && unrotatedY <= pos.getY() + size.getY() / 2;
+        return pointInPolygon(unrotatedX, unrotatedY, xPoints, yPoints, sides);
+    }
+
+    private boolean pointInPolygon(double x, double y, int[] xPoints, int[] yPoints, int nPoints) {
+        boolean result = false;
+        int j = nPoints - 1;
+        for (int i = 0; i < nPoints; i++) {
+            if ((yPoints[i] > y) != (yPoints[j] > y) &&
+                    (x < (xPoints[j] - xPoints[i]) * (y - yPoints[i]) / (yPoints[j] - yPoints[i]) + xPoints[i])) {
+                result = !result;
+            }
+            j = i;
+        }
+        return result;
     }
 
 
@@ -182,9 +195,9 @@ public class ExagoneAwt extends Exagone implements ShapeAwt{
 
     @Override
     public Shape copy() {
-        ExagoneAwt e = new ExagoneAwt(
+        PolygonAwt e = new PolygonAwt(
                 new Point2D.Double(pos.getX(), pos.getY()),
-                new Point2D.Double(size.getX(), size.getY())
+                sidesLength
         );
         e.setColor(new Color(color.getRGB()));
         e.setRotation(rotation);
