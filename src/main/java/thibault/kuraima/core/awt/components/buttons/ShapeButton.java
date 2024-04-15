@@ -33,8 +33,10 @@ public class ShapeButton extends Button{
         setFocusPainted(false);
         setContentAreaFilled(false);
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        System.out.println(text);
         Graphics2D g2d = image.createGraphics();
         s.draw(g2d);
+        System.out.println("Drawing shape : " + s.name());
         g2d.dispose();
         ImageIcon icon = new ImageIcon(image);
         setIcon(icon);
