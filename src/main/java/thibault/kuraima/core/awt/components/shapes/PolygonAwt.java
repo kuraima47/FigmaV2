@@ -15,9 +15,9 @@ import java.util.Arrays;
 
 public class PolygonAwt extends Polygon implements ShapeAwt{
 
-    public PolygonAwt(Point2D point, int lenghtSide) {
+    public PolygonAwt(Point2D point, Point2D size) {
         position(point);
-        sidesLength = lenghtSide;
+        size(size);
     }
 
     @Override
@@ -78,6 +78,9 @@ public class PolygonAwt extends Polygon implements ShapeAwt{
 
     @Override
     public boolean contains(int x, int y) {
+        if (rotationCenter == null) {
+            rotationCenter = new Point2D.Double(pos.getX(), pos.getY());
+        }
         double translatedX = x - rotationCenter.getX();
         double translatedY = y - rotationCenter.getY();
         double unrotatedX = translatedX * Math.cos(-Math.toRadians(rotation)) - translatedY * Math.sin(-Math.toRadians(rotation));
@@ -197,7 +200,7 @@ public class PolygonAwt extends Polygon implements ShapeAwt{
     public Shape copy() {
         PolygonAwt e = new PolygonAwt(
                 new Point2D.Double(pos.getX(), pos.getY()),
-                sidesLength
+                new Point2D.Double(size.getX(), size.getY())
         );
         e.setColor(new Color(color.getRGB()));
         e.setRotation(rotation);

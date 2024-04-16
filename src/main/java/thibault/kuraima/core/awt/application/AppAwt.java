@@ -151,8 +151,10 @@ public class AppAwt extends App implements Serializable {
             }
         } catch (ClassNotFoundException e) {
             System.out.println("ClassNotFoundException occurred.");
+            throw new RuntimeException(e);
         } catch (IOException e) {
             System.out.println("IOException occurred : " + e.getMessage());
+            throw new RuntimeException(e);
         }
     }
 
@@ -190,13 +192,18 @@ public class AppAwt extends App implements Serializable {
 
     private void addShapeInToolbar() {
         toolbar.addButton(new ShapeButton("Rectangle", (ShapeAwt) _factory.createRectangle(100, 100, 50, 50), this));
-        toolbar.addButton(new ShapeButton("Exagone", _factory.createShape(new PolygonAwt(new Point(100, 100), 28)), this));
+        toolbar.addButton(new ShapeButton("Exagone", _factory.createShape(new PolygonAwt(new Point(100, 100), new Point(50, 50))), this));
     }
 
     private void restoreToolbar(){
         File file = new File(System.getProperty("user.dir") + "/toolbar.ser");
         if (file.exists()) {
-            restore(null, "Toolbar", file.getAbsolutePath());
+            try {
+                restore(null, "Toolbar", file.getAbsolutePath());
+            } catch (Exception e) {
+                addSaveLoadInToolbar();
+                addShapeInToolbar();
+            }
         } else {
             addSaveLoadInToolbar();
             addShapeInToolbar();

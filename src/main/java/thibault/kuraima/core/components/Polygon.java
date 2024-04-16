@@ -2,6 +2,7 @@ package thibault.kuraima.core.components;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
+import java.util.Arrays;
 
 public abstract class Polygon implements Shape {
     protected Point2D pos  = new Point2D.Double(0, 0);
@@ -34,22 +35,39 @@ public abstract class Polygon implements Shape {
 
     @Override
     public Shape size(Point2D vec) {
-        double scale = (vec.getX() + vec.getY()) / 2;  // Calcul d'une échelle moyenne
-        this.sidesLength *= scale;  // Mettre à jour la longueur des côtés proportionnellement
-        updateVertices();  // Mettre à jour les sommets
+        if (xPoints == null && yPoints == null){
+            xPoints = new int[sides];
+            yPoints = new int[sides];
+            for (int i = 0; i < sides; i++) {
+                xPoints[i] = (int) (pos.getX() + sidesLength * Math.cos(2 * Math.PI * i / sides));
+                yPoints[i] = (int) (pos.getY() + sidesLength * Math.sin(2 * Math.PI * i / sides));
+            }
+        }
+        int minX = Arrays.stream(xPoints).min().getAsInt();
+        int maxX = Arrays.stream(xPoints).max().getAsInt();
+        int minY = Arrays.stream(yPoints).min().getAsInt();
+        int maxY = Arrays.stream(yPoints).max().getAsInt();
+        if (maxX - minX == 0 || maxY - minY == 0) {
+            return this;
+        }
+
+        double scaleX = vec.getX() / (maxX - minX);
+        double scaleY = vec.getY() / (maxY - minY);
+        double newSidesLength = sidesLength * Math.min(scaleX, scaleY);
+        double newCenterX = (vec.getX() / 2) + minX;
+        double newCenterY = (vec.getY() / 2) + minY;
+
+        for (int i = 0; i < xPoints.length; i++) {
+            xPoints[i] = (int) (newCenterX + newSidesLength * Math.cos(2 * Math.PI * i / sides));
+            yPoints[i] = (int) (newCenterY + newSidesLength * Math.sin(2 * Math.PI * i / sides));
+        }
+
+        sidesLength = (int) newSidesLength;
+        this.size.setLocation(vec);
+
         return this;
     }
 
-    private void updateVertices() {
-        if (xPoints == null || xPoints.length != sides) {
-            xPoints = new int[sides];
-            yPoints = new int[sides];
-        }
-        for (int i = 0; i < sides; i++) {
-            xPoints[i] = (int) ((int) pos.getX() + sidesLength * Math.cos(2 * Math.PI * i / sides));
-            yPoints[i] = (int) ((int) pos.getY() + sidesLength * Math.sin(2 * Math.PI * i / sides));
-        }
-    }
 
     @Override
     public Point2D position() {
