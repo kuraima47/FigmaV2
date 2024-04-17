@@ -13,6 +13,7 @@ public class Toolbar extends JToolBar{
 
     private static final long serialVersionUID = 1L;
     transient ToolbarListener listener;
+    transient Component space;
 
     public Toolbar(ToolbarListener listener) {
         super();
@@ -26,14 +27,13 @@ public class Toolbar extends JToolBar{
     }
 
     public void addButton(Button button) {
-        if (getComponents().length > 4) {
-            remove(getComponents().length - 1);
+        if (space != null) {
+            remove(space);
         }
         add(button);
         addSeparator();
-        if (getComponents().length > 4) {
-            add(Box.createHorizontalGlue());
-        }
+        space = Box.createHorizontalGlue();
+        add(space);
     }
 
     public void restore(Toolbar backup) {
@@ -55,8 +55,6 @@ public class Toolbar extends JToolBar{
                 this.addButton(sb2);
             }
         }
-        add(Box.createHorizontalGlue());
-        revalidate();
         repaint();
     }
 
