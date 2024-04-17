@@ -2,6 +2,7 @@ package thibault.kuraima.core.awt.components.buttons;
 
 import thibault.kuraima.core.awt.application.AppAwt;
 import thibault.kuraima.core.awt.application.Singleton.AppContext;
+import thibault.kuraima.core.utils.Command.SaveCommand;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -15,19 +16,8 @@ public class SaveButton extends Button{
         addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFileChooser fileChooser = new JFileChooser();
-                fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("SER files", "ser"));
-                fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
-                int result = fileChooser.showSaveDialog(null);
-                if (result == JFileChooser.APPROVE_OPTION) {
-                    File file = fileChooser.getSelectedFile();
-                    String filePath = file.getAbsolutePath();
-                    if (!filePath.endsWith(".ser")) {
-                        filePath += ".ser";
-                    }
-                    AppAwt appAwt = AppContext.instance().app();
-                    appAwt.backup(filePath, "Panel");
-                }
+                SaveCommand c = new SaveCommand();
+                c.execute();
             }
         });
 
