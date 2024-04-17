@@ -26,8 +26,6 @@ public class Toolbar extends JToolBar{
     }
 
     public void addButton(Button button) {
-        System.out.println("Adding button");
-        System.out.println(getComponents().length);
         if (getComponents().length > 4) {
             remove(getComponents().length - 1);
         }
@@ -45,15 +43,15 @@ public class Toolbar extends JToolBar{
         for(Component c : backup.getComponents()){
             if (c instanceof ShapeButton){
                 ShapeButton sb = (ShapeButton) c;
-                ShapeButton sb2 = new ShapeButton(sb.shape.name(), (ShapeAwt) sb.shape.copy(), (AppAwt) listener.panel._app);
+                ShapeButton sb2 = new ShapeButton(sb.shape.name(), (ShapeAwt) sb.shape.copy());
                 this.addButton(sb2);
             } else if (c instanceof LoadButton){
                 LoadButton lb = (LoadButton) c;
-                LoadButton lb2 = new LoadButton(lb.getText(), (AppAwt) listener.panel._app);
+                LoadButton lb2 = new LoadButton(lb.getText());
                 this.addButton(lb2);
             } else if (c instanceof SaveButton){
                 SaveButton sb = (SaveButton) c;
-                SaveButton sb2 = new SaveButton(sb.getText(), (AppAwt) listener.panel._app);
+                SaveButton sb2 = new SaveButton(sb.getText());
                 this.addButton(sb2);
             }
         }

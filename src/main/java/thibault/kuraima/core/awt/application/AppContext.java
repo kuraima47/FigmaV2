@@ -15,12 +15,12 @@ public class AppContext {
             _singleton = new AppContext();
         return _singleton;
     }
-    private AwtContext() {
+    private AppContext() {
     }
 
     public AppAwt app() {
         if (_app == null)
-            throw new RuntimeErrorException(null, "Graphics has not been set contex is not valid");
+            throw new RuntimeErrorException(null, "App has not been set contex is not valid");
         return _app;
     }
 

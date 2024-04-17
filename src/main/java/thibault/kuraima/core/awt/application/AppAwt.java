@@ -24,7 +24,7 @@ import java.util.Base64;
 
 public class AppAwt extends App implements Serializable {
 
-    public DrawingPanel drawingPanel = new DrawingPanel();
+    public DrawingPanel drawingPanel;
     public Toolbar toolbar;
 
     public int version = 0;
@@ -32,16 +32,17 @@ public class AppAwt extends App implements Serializable {
     private transient History history;
 
     public AppAwt() {
+        AppContext.instance().app(this);
         if (_factory == null) {
             _factory = createFactory();
         }
+        drawingPanel = new DrawingPanel();
         history = new History();
         createScene();
         AppListener appListener = new AppListener();
         addKeyListener(appListener);
         requestFocus();
         restoreToolbar();
-        AppContext.instance().app(this);
         execute();
     }
 
