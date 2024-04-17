@@ -1,7 +1,6 @@
 package thibault.kuraima.core.utils.Memento;
 
-import org.apache.commons.lang3.tuple.Pair;
-
+import thibault.kuraima.core.utils.Command.Command;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -9,14 +8,14 @@ import java.util.List;
 
 public class History implements Serializable {
 
-    private List<Memento> history = new ArrayList<Memento>();
+    private List<Pair> history = new ArrayList<Pair>();
     private int virtualSize = 0;
 
-    public void push(Memento m) {
+    public void push(Command c, Memento m) {
         if (virtualSize != history.size() && virtualSize > 0) {
             history = history.subList(0, virtualSize - 1);
         }
-        history.add(m);
+        history.add(new Pair(c, m));
         virtualSize = history.size();
     }
 
@@ -34,7 +33,7 @@ public class History implements Serializable {
             return null;
         }
         virtualSize = Math.max(0, virtualSize - 2);
-        return history.get(virtualSize);
+        return history.get(virtualSize).memento;
     }
 
     public boolean redo() throws IOException {
@@ -51,6 +50,6 @@ public class History implements Serializable {
             return null;
         }
         virtualSize = Math.min(history.size(), virtualSize + 2);
-        return history.get(virtualSize - 1);
+        return history.get(virtualSize - 1).memento;
     }
 }

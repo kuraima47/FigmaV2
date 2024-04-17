@@ -88,6 +88,9 @@ public class RectangleAwt extends Rectangle implements ShapeAwt {
 
     @Override
     public boolean contains(int x, int y) {
+        if (rotationCenter == null) {
+            rotationCenter = new Point2D.Double(pos.getX(), pos.getY());
+        }
         double translatedX = x - rotationCenter.getX();
         double translatedY = y - rotationCenter.getY();
         double unrotatedX = translatedX * Math.cos(-rotation) - translatedY * Math.sin(-rotation);
@@ -195,8 +198,8 @@ public class RectangleAwt extends Rectangle implements ShapeAwt {
     }
 
     @Override
-    public JPopupMenu getMenu(DrawingPanel panel) {
-        return new MenuRectangle(panel).create();
+    public JPopupMenu getMenu() {
+        return new MenuRectangle().create();
     }
 
     @Override

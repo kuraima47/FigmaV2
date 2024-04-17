@@ -3,6 +3,7 @@ package thibault.kuraima.core.awt.listeners;
 import thibault.kuraima.core.awt.application.AppAwt;
 import thibault.kuraima.core.awt.application.AppContext;
 import thibault.kuraima.core.awt.components.buttons.ShapeButton;
+import thibault.kuraima.core.utils.Command.RemoveBtnCommand;
 
 import javax.swing.*;
 import java.awt.*;
@@ -46,8 +47,10 @@ public class ButtonListener implements Listener{
             icon = new ImageIcon(newimg);
             menuItem.setIcon(icon);
             menuItem.addActionListener(e1 -> {
-                app.toolbar.removeButton(_btn);
-                app.execute();
+                RemoveBtnCommand c = new RemoveBtnCommand();
+                c.setBtn(_btn);
+                c.setToolbar(app.toolbar);
+                app.execute(c);
                 File file = new File(System.getProperty("user.dir") + "/toolbar.ser");
                 app.backup(file.getAbsolutePath(), "Toolbar");
             });

@@ -1,6 +1,7 @@
 package thibault.kuraima.core.awt.listeners;
 
 import thibault.kuraima.core.awt.components.app.DrawingPanel;
+import thibault.kuraima.core.utils.Command.MoveCommand;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,14 +32,7 @@ public class DrawingListener implements Listener {
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        drawingPanel.getDraggedShape();
-        if(drawingPanel.getDraggedShape() != null){
-            Point2D oldPos = drawingPanel.getDraggedShape().position();
-            Point2D newPos = new Point(e.getX(), e.getY());
-            Point2D diff = new Point2D.Double(newPos.getX() - oldPos.getX(), newPos.getY() - oldPos.getY());
-            drawingPanel.getDraggedShape().translate(diff);
-            drawingPanel.repaint();
-        }
+
     }
 
     @Override
@@ -59,20 +53,15 @@ public class DrawingListener implements Listener {
         if (drawingPanel.getSelectedShape() != null) {
             drawingPanel.getSelectedShape().setSelected(true);
             if (e.getButton() == MouseEvent.BUTTON3) {
-                JPopupMenu popup = drawingPanel.getSelectedShape().getMenu(drawingPanel);
+                JPopupMenu popup = drawingPanel.getSelectedShape().getMenu();
                 popup.show(drawingPanel, e.getX(), e.getY());
             }
         }
         if (e.getButton() == MouseEvent.BUTTON1) {
-            if (drawingPanel.getNewShape() != null) {
-                drawingPanel.getNewShape().setNew(false);
-                drawingPanel.setDraggedShape(false);
-                drawingPanel.unselectShape();
-                drawingPanel._app.execute();
-            }
-            if (drawingPanel.getSelectedShape() == null) {
-                drawingPanel.unselectShape();
-            }
+            MoveCommand c = new MoveCommand();
+            c.setPanel(drawingPanel);
+            c.setEventBtn(e.getButton());
+            drawingPanel._app.execute(c);
         }
 
     }
@@ -81,17 +70,10 @@ public class DrawingListener implements Listener {
     public void mouseReleased(MouseEvent e) {
         drawingPanel._app.requestFocus();
         drawingPanel.repaint();
-        if (e.getButton() == MouseEvent.BUTTON3) {
-            if (drawingPanel.getDraggedShape() != null && !drawingPanel.getDraggedShape().isNew()) {
-                drawingPanel.unselectShape();
-                drawingPanel._app.execute();
-            }
-        }else if (e.getButton() == MouseEvent.BUTTON1) {
-            if (drawingPanel.getDraggedShape() != null && drawingPanel.getDraggedShape().isDragged()) {
-                drawingPanel.unselectShape();
-                drawingPanel._app.execute();
-            }
-        }
+        MoveCommand c = new MoveCommand();
+        c.setPanel(drawingPanel);
+        c.setEventBtn(e.getButton());
+        drawingPanel._app.execute(c);
     }
 
     @Override

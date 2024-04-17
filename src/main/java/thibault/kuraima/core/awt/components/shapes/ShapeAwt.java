@@ -12,7 +12,7 @@ public interface ShapeAwt extends Shape {
 
     ArrayList<JLabel> getLabels();
 
-    JPopupMenu getMenu(DrawingPanel panel);
+    JPopupMenu getMenu();
 
     void unSelect();
 

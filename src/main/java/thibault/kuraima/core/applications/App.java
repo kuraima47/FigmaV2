@@ -1,6 +1,7 @@
 package thibault.kuraima.core.applications;
 
 import thibault.kuraima.core.utils.AbstractFactory.ShapeFactory;
+import thibault.kuraima.core.utils.Command.Command;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -21,5 +22,5 @@ public abstract class App extends JFrame {
 
     public abstract void restore(String backup, String type, String Path) throws IOException;
 
-    public abstract void execute();
+    public abstract void execute(Command c);
 }

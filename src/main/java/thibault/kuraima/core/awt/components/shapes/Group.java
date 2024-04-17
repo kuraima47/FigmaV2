@@ -176,8 +176,8 @@ public class Group implements ShapeAwt{
     }
 
     @Override
-    public JPopupMenu getMenu(DrawingPanel panel) {
-        return new MenuGroup(panel).create();
+    public JPopupMenu getMenu() {
+        return new MenuGroup().create();
     }
 
     @Override

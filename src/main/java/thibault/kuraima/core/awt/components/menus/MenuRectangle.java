@@ -1,6 +1,9 @@
 package thibault.kuraima.core.awt.components.menus;
 
+import thibault.kuraima.core.awt.application.AppAwt;
+import thibault.kuraima.core.awt.application.AppContext;
 import thibault.kuraima.core.awt.components.app.DrawingPanel;
+import thibault.kuraima.core.utils.Command.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,7 +14,7 @@ import java.awt.geom.Point2D;
 public class MenuRectangle implements Menu{
 
 
-    DrawingPanel panel;
+    AppAwt app;
     JPopupMenu popup = new JPopupMenu();
 
     JMenuItem delete;
@@ -21,8 +24,8 @@ public class MenuRectangle implements Menu{
     JMenuItem rounder;
 
 
-    public MenuRectangle(DrawingPanel panel){
-        this.panel = panel;
+    public MenuRectangle(){
+        this.app = AppContext.instance().app();
     }
 
     @Override
@@ -54,18 +57,20 @@ public class MenuRectangle implements Menu{
         delete.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                panel.deleteSelectedShape();
-                panel._app.execute();
+                DeleteCommand c = new DeleteCommand();
+                c.setPanel(app.drawingPanel);
+                app.execute(c);
             }
         });
 
         color.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Color newColor = JColorChooser.showDialog(null, "Choose a color", panel.getSelectedShape().getColor());
-                panel.getSelectedShape().setColor(newColor);
-                panel.repaint();
-                panel._app.execute();
+                Color newColor = JColorChooser.showDialog(null, "Choose a color", app.drawingPanel.getSelectedShape().getColor());
+                ColorCommand c = new ColorCommand();
+                c.setPanel(app.drawingPanel);
+                c.setColor(newColor);
+                app.execute(c);
             }
         });
 
@@ -74,16 +79,17 @@ public class MenuRectangle implements Menu{
             public void actionPerformed(ActionEvent e) {
                 JDialog d = new JDialog();
                 JLabel l3 = new JLabel("Select the rotation angle : ");
-                String defaultValue3 = String.valueOf(panel.getSelectedShape().rotation());
+                String defaultValue3 = String.valueOf(app.drawingPanel.getSelectedShape().rotation());
                 JTextField tf3 = new JTextField(defaultValue3, defaultValue3.length());
                 JButton b = new JButton("Submit");
                 b.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        panel.getSelectedShape().setRotation(Double.parseDouble(tf3.getText()));
-                        panel.repaint();
+                        RotateCommand c = new RotateCommand();
+                        c.setPanel(app.drawingPanel);
+                        c.setAngle(Integer.parseInt(tf3.getText()));
+                        app.execute(c);
                         d.dispose();
-                        panel._app.execute();
                     }
                 });
                 JPanel p = new JPanel(new GridLayout(0, 1));
@@ -104,20 +110,21 @@ public class MenuRectangle implements Menu{
             public void actionPerformed(ActionEvent e) {
                 JDialog d = new JDialog();
                 JLabel l = new JLabel("Select the width factor : ");
-                String defaultValue = String.valueOf(panel.getSelectedShape().size().getX());
+                String defaultValue = String.valueOf(app.drawingPanel.getSelectedShape().size().getX());
                 JTextField tf = new JTextField(defaultValue, defaultValue.length());
                 JLabel l2 = new JLabel("Select the height factor : ");
-                String defaultValue2 = String.valueOf(panel.getSelectedShape().size().getY());
+                String defaultValue2 = String.valueOf(app.drawingPanel.getSelectedShape().size().getY());
                 JTextField tf2 = new JTextField(defaultValue2, defaultValue2.length());
 
                 JButton b = new JButton("Submit");
                 b.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        panel.getSelectedShape().size(new Point2D.Double(Double.parseDouble(tf.getText()), Double.parseDouble(tf2.getText())));
-                        panel.repaint();
+                        SizeCommand c = new SizeCommand();
+                        c.setPanel(app.drawingPanel);
+                        c.setSize(new Point2D.Double(Double.parseDouble(tf.getText()), Double.parseDouble(tf2.getText())));
+                        app.execute(c);
                         d.dispose();
-                        panel._app.execute();
                     }
                 });
                 JPanel p = new JPanel(new GridLayout(0, 1));
@@ -142,20 +149,21 @@ public class MenuRectangle implements Menu{
             public void actionPerformed(ActionEvent e) {
                 JDialog d = new JDialog();
                 JLabel l = new JLabel("Select the round width factor : ");
-                String defaultValue = String.valueOf(panel.getSelectedShape().getRound().getX());
+                String defaultValue = String.valueOf(app.drawingPanel.getSelectedShape().getRound().getX());
                 JTextField tf = new JTextField(defaultValue, defaultValue.length());
                 JLabel l2 = new JLabel("Select the round height factor : ");
-                String defaultValue2 = String.valueOf(panel.getSelectedShape().getRound().getY());
+                String defaultValue2 = String.valueOf(app.drawingPanel.getSelectedShape().getRound().getY());
                 JTextField tf2 = new JTextField(defaultValue2, defaultValue2.length());
 
                 JButton b = new JButton("Submit");
                 b.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        panel.getSelectedShape().setRound(new Point2D.Double(Double.parseDouble(tf.getText()), Double.parseDouble(tf2.getText())));
-                        panel.repaint();
+                        RoundCommand c = new RoundCommand();
+                        c.setPanel(app.drawingPanel);
+                        c.setRoundAngle(new Point2D.Double(Double.parseDouble(tf.getText()), Double.parseDouble(tf2.getText())));
+                        app.execute(c);
                         d.dispose();
-                        panel._app.execute();
                     }
                 });
                 JPanel p = new JPanel(new GridLayout(0, 1));

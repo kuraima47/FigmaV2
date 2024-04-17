@@ -6,6 +6,7 @@ import thibault.kuraima.core.awt.components.app.Toolbar;
 import thibault.kuraima.core.awt.components.buttons.ShapeButton;
 import thibault.kuraima.core.components.Shape;
 import thibault.kuraima.core.utils.AbstractFactory.ShapeFactory;
+import thibault.kuraima.core.utils.Command.AddToolbarCommand;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -61,18 +62,10 @@ public class ToolbarListener implements Listener {
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        Shape s = panel.getDraggedShape();
-        if (s != null && !s.isNew()) {
-            toolbar.addButton(new ShapeButton(s.name(), factory.createShape(s)));
-            File file = new File(System.getProperty("user.dir") + "/toolbar.ser");
-            try {
-                panel._app.backup(file.getAbsolutePath(), "Toolbar");
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-            panel.deleteSelectedShape();
-            panel._app.execute();
-        }
+        AddToolbarCommand c = new AddToolbarCommand();
+        c.setToolbar(toolbar);
+        c.setPanel(panel);
+        panel._app.execute(c);
     }
 
     @Override

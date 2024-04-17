@@ -218,8 +218,8 @@ public class PolygonAwt extends Polygon implements ShapeAwt{
     }
 
     @Override
-    public JPopupMenu getMenu(DrawingPanel panel) {
-        return new MenuPolygone(panel).create();
+    public JPopupMenu getMenu() {
+        return new MenuPolygone().create();
     }
 
     @Override

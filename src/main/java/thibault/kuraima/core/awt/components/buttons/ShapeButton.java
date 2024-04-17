@@ -4,6 +4,7 @@ import thibault.kuraima.core.awt.application.AppAwt;
 import thibault.kuraima.core.awt.application.AppContext;
 import thibault.kuraima.core.awt.components.shapes.ShapeAwt;
 import thibault.kuraima.core.awt.listeners.ButtonListener;
+import thibault.kuraima.core.utils.Command.CreateShapeCommand;
 
 import javax.swing.*;
 import java.awt.*;
@@ -46,8 +47,9 @@ public class ShapeButton extends Button{
             @Override
             public void actionPerformed(ActionEvent e) {
                 AppAwt appAwt = AppContext.instance().app();
-                appAwt.drawingPanel.addShape(appAwt._factory.createShape(shape));
-                appAwt.execute();
+                CreateShapeCommand c = new CreateShapeCommand();
+                c.setShape(shape);
+                appAwt.execute(c);
             }
         });
 

@@ -3,7 +3,7 @@ package thibault.kuraima.core.awt.listeners;
 import thibault.kuraima.core.applications.App;
 import thibault.kuraima.core.awt.application.AppAwt;
 import thibault.kuraima.core.awt.application.AppContext;
-import thibault.kuraima.core.awt.components.app.DrawingPanel;
+import thibault.kuraima.core.utils.Command.*;
 
 import javax.swing.*;
 import java.awt.event.KeyEvent;
@@ -27,8 +27,9 @@ public class AppListener implements Listener{
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_G && e.isControlDown()){
-            ((AppAwt)_app).drawingPanel.groupSelectedShapes();
-            _app.execute();
+            GroupCommand c = new GroupCommand();
+            c.setPanel(((AppAwt) _app).drawingPanel);
+            _app.execute(c);
         } else if (e.getKeyCode() == KeyEvent.VK_Z && e.isControlDown()){
             try {
                 _app.undo();
@@ -76,17 +77,21 @@ public class AppListener implements Listener{
                 throw new RuntimeException(ex);
             }
         } else if (e.getKeyCode() == KeyEvent.VK_DELETE) {
-            ((AppAwt) _app).drawingPanel.deleteSelectedShape();
-            _app.execute();
+            DeleteCommand c = new DeleteCommand();
+            c.setPanel(((AppAwt) _app).drawingPanel);
+            _app.execute(c);
         } else if (e.getKeyCode() == KeyEvent.VK_D) {
-            ((AppAwt) _app).drawingPanel.duplicateSelectedShape();
-            _app.execute();
+            DuplicateCommand c = new DuplicateCommand();
+            c.setPanel(((AppAwt) _app).drawingPanel);
+            _app.execute(c);
         } else if (e.getKeyCode() == KeyEvent.VK_C && e.isControlDown()) {
-            ((AppAwt) _app).drawingPanel.copySelectedShape();
-            _app.execute();
+            CopyCommand c = new CopyCommand();
+            c.setPanel(((AppAwt) _app).drawingPanel);
+            c.execute();
         } else if (e.getKeyCode() == KeyEvent.VK_V && e.isControlDown()) {
-            ((AppAwt) _app).drawingPanel.pasteSelectedShape();
-            _app.execute();
+            PasteCommand c = new PasteCommand();
+            c.setPanel(((AppAwt) _app).drawingPanel);
+            _app.execute(c);
         }
     }
 
