@@ -1,6 +1,7 @@
 package thibault.kuraima.core.awt.components.buttons;
 
 import thibault.kuraima.core.awt.application.AppAwt;
+import thibault.kuraima.core.awt.application.AppContext;
 import thibault.kuraima.core.awt.components.shapes.ShapeAwt;
 
 import javax.swing.*;
@@ -12,7 +13,7 @@ import java.awt.image.BufferedImage;
 
 public class DeleteButton extends Button{
 
-    public DeleteButton(String text, AppAwt appAwt) {
+    public DeleteButton(String text) {
         super();
         ImageIcon icon = new ImageIcon("src/main/resources/images/delete.png");
         Image image = icon.getImage();
@@ -22,6 +23,7 @@ public class DeleteButton extends Button{
         setBorderPainted(false);
         setFocusPainted(false);
         setContentAreaFilled(false);
+        AppAwt appAwt = AppContext.instance().app();
         addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

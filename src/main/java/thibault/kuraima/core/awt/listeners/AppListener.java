@@ -2,6 +2,7 @@ package thibault.kuraima.core.awt.listeners;
 
 import thibault.kuraima.core.applications.App;
 import thibault.kuraima.core.awt.application.AppAwt;
+import thibault.kuraima.core.awt.application.AppContext;
 import thibault.kuraima.core.awt.components.app.DrawingPanel;
 
 import javax.swing.*;
@@ -14,8 +15,8 @@ public class AppListener implements Listener{
 
     private App _app;
 
-    public AppListener(App app) {
-        _app = app;
+    public AppListener() {
+        _app = AppContext.instance().app();
     }
 
     @Override

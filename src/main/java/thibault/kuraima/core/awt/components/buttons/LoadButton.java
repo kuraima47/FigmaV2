@@ -1,6 +1,7 @@
 package thibault.kuraima.core.awt.components.buttons;
 
 import thibault.kuraima.core.awt.application.AppAwt;
+import thibault.kuraima.core.awt.application.AppContext;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -10,7 +11,7 @@ import java.io.File;
 public class LoadButton extends Button{
 
 
-    public LoadButton(String text, AppAwt appAwt) {
+    public LoadButton(String text) {
         super(text);
 
         addActionListener(new ActionListener() {
@@ -26,6 +27,7 @@ public class LoadButton extends Button{
                     if (!filePath.endsWith(".ser")) {
                         filePath += ".ser";
                     }
+                    AppAwt appAwt = AppContext.instance().app();
                     appAwt.restore(null, "Panel", filePath);
                 }
             }

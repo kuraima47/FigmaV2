@@ -1,6 +1,7 @@
 package thibault.kuraima.core.awt.components.shapes;
 
 import thibault.kuraima.core.awt.components.app.DrawingPanel;
+import thibault.kuraima.core.awt.components.menus.MenuPolygone;
 import thibault.kuraima.core.awt.components.menus.MenuRectangle;
 import thibault.kuraima.core.components.Polygon;
 import thibault.kuraima.core.components.Shape;
@@ -44,11 +45,10 @@ public class PolygonAwt extends Polygon implements ShapeAwt{
         if (selected) {
             g.setColor(Color.BLUE);
             g.setStroke(new BasicStroke(2));
-            int minX = Arrays.stream(x).min().getAsInt();
-            int maxX = Arrays.stream(x).max().getAsInt();
-            int minY = Arrays.stream(y).min().getAsInt();
-            int maxY = Arrays.stream(y).max().getAsInt();
-            g.drawRect(minX, minY, maxX - minX, maxY - minY);
+            g.drawRect((int) (pos.getX() - size.getX() / 2),
+                    (int) (pos.getY() - size.getY() / 2),
+                    (int) (size.getX()),
+                    (int) (size.getY()));
         }
     }
 
@@ -219,7 +219,7 @@ public class PolygonAwt extends Polygon implements ShapeAwt{
 
     @Override
     public JPopupMenu getMenu(DrawingPanel panel) {
-        return new MenuRectangle(panel).create();
+        return new MenuPolygone(panel).create();
     }
 
     @Override

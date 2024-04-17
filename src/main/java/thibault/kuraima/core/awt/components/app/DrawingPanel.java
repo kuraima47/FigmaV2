@@ -1,7 +1,7 @@
 package thibault.kuraima.core.awt.components.app;
 
 import thibault.kuraima.core.applications.App;
-import thibault.kuraima.core.awt.application.AwtContext;
+import thibault.kuraima.core.awt.application.AppContext;
 import thibault.kuraima.core.awt.components.shapes.Group;
 import thibault.kuraima.core.awt.components.shapes.ShapeAwt;
 
@@ -26,11 +26,9 @@ public class DrawingPanel extends JPanel implements Serializable {
 
     public transient ShapeAwt copiedShape;
 
-    public DrawingPanel(App app) {
+    public DrawingPanel() {
         super();
-        _app = app;
-        Graphics g = getGraphics();
-        AwtContext.instance().graphics(g);
+        _app = AppContext.instance().app();
         setBorder(BorderFactory.createLineBorder(Color.black));
         shapesListPanel = new JPanel();
         shapesListPanel.setLayout(new BoxLayout(shapesListPanel, BoxLayout.Y_AXIS));

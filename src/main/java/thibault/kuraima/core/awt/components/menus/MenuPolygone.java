@@ -1,6 +1,8 @@
 package thibault.kuraima.core.awt.components.menus;
 
 import thibault.kuraima.core.awt.components.app.DrawingPanel;
+import thibault.kuraima.core.awt.components.shapes.PolygonAwt;
+import thibault.kuraima.core.components.Polygon;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,7 +18,7 @@ public class MenuPolygone implements Menu{
     JMenuItem color;
     JMenuItem rotate;
     JMenuItem scale;
-    JMenuItem rounder;
+    JMenuItem sides;
 
 
     public MenuPolygone(DrawingPanel panel){
@@ -40,12 +42,12 @@ public class MenuPolygone implements Menu{
         color = new JMenuItem("Color");
         rotate = new JMenuItem("Rotate");
         scale = new JMenuItem("Scale");
-        rounder = new JMenuItem("Round");
+        sides = new JMenuItem("Sides");
         popup.add(delete);
         popup.add(color);
         popup.add(rotate);
         popup.add(scale);
-        popup.add(rounder);
+        popup.add(sides);
     }
 
     private void attachListener(){
@@ -131,22 +133,19 @@ public class MenuPolygone implements Menu{
             }
         });
 
-        rounder.addActionListener(new ActionListener() {
+        sides.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JDialog d = new JDialog();
-                JLabel l = new JLabel("Select the round width factor : ");
+                JLabel l = new JLabel("Select the number of sides : ");
                 String defaultValue = String.valueOf(panel.getSelectedShape().getRound().getX());
                 JTextField tf = new JTextField(defaultValue, defaultValue.length());
-                JLabel l2 = new JLabel("Select the round height factor : ");
-                String defaultValue2 = String.valueOf(panel.getSelectedShape().getRound().getY());
-                JTextField tf2 = new JTextField(defaultValue2, defaultValue2.length());
 
                 JButton b = new JButton("Submit");
                 b.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        panel.getSelectedShape().setRound(new Point2D.Double(Double.parseDouble(tf.getText()), Double.parseDouble(tf2.getText())));
+                        ((PolygonAwt)panel.getSelectedShape()).setSides(Integer.parseInt(tf.getText()));
                         panel.repaint();
                         d.dispose();
                     }
@@ -156,8 +155,6 @@ public class MenuPolygone implements Menu{
                 box1.add(l);
                 box1.add(tf);
                 Box box2 = Box.createHorizontalBox();
-                box2.add(l2);
-                box2.add(tf2);
                 p.add(box1);
                 p.add(box2);
                 p.add(b);

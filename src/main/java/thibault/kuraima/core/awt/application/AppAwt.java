@@ -24,7 +24,7 @@ import java.util.Base64;
 
 public class AppAwt extends App implements Serializable {
 
-    public DrawingPanel drawingPanel = new DrawingPanel(this);
+    public DrawingPanel drawingPanel = new DrawingPanel();
     public Toolbar toolbar;
 
     public int version = 0;
@@ -37,11 +37,12 @@ public class AppAwt extends App implements Serializable {
         }
         history = new History();
         createScene();
-        AppListener appListener = new AppListener(this);
+        AppListener appListener = new AppListener();
         addKeyListener(appListener);
         requestFocus();
-        execute();
         restoreToolbar();
+        AppContext.instance().app(this);
+        execute();
     }
 
     @Override
@@ -63,7 +64,7 @@ public class AppAwt extends App implements Serializable {
 
     @Override
     public void execute() {
-        history.push(new Memento(this));
+        history.push(new Memento());
     }
 
     @Override
@@ -173,7 +174,7 @@ public class AppAwt extends App implements Serializable {
         JPanel topPanel = new JPanel();
         topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
         topPanel.add(toolbar);
-        topPanel.add(new DeleteButton("Delete", this));
+        topPanel.add(new DeleteButton("Delete"));
         add(topPanel, BorderLayout.PAGE_START);
         add(drawingPanel.getShapeList(), BorderLayout.WEST);
         add(drawingPanel, BorderLayout.CENTER);
@@ -186,13 +187,13 @@ public class AppAwt extends App implements Serializable {
     }
 
     private void addSaveLoadInToolbar(){
-        toolbar.addButton(new SaveButton("SavePanel", this));
-        toolbar.addButton(new LoadButton("LoadPanel", this));
+        toolbar.addButton(new SaveButton("SavePanel"));
+        toolbar.addButton(new LoadButton("LoadPanel"));
     }
 
     private void addShapeInToolbar() {
-        toolbar.addButton(new ShapeButton("Rectangle", (ShapeAwt) _factory.createRectangle(100, 100, 50, 50), this));
-        toolbar.addButton(new ShapeButton("Exagone", _factory.createShape(new PolygonAwt(new Point(100, 100), new Point(50, 50))), this));
+        toolbar.addButton(new ShapeButton("Rectangle", (ShapeAwt) _factory.createRectangle(100, 100, 50, 50)));
+        toolbar.addButton(new ShapeButton("Exagone", _factory.createShape(new PolygonAwt(new Point(100, 100), new Point(50, 50)))));
     }
 
     private void restoreToolbar(){

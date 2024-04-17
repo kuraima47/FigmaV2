@@ -7,25 +7,25 @@ import java.awt.*;
 * Singleton to share Graphics between all AWT implementation and to 
 * prevent to poluate the Shape interface.
 */
-public class AwtContext {
-    static private AwtContext _singleton = null;
-    private Graphics _graphics = null;
-    static public AwtContext instance() {
+public class AppContext {
+    static private AppContext _singleton = null;
+    private AppAwt _app = null;
+    static public AppContext instance() {
         if (_singleton == null)
-            _singleton = new AwtContext();
+            _singleton = new AppContext();
         return _singleton;
     }
     private AwtContext() {
     }
 
-    public Graphics graphics() {
-        if (_graphics == null) 
+    public AppAwt app() {
+        if (_app == null)
             throw new RuntimeErrorException(null, "Graphics has not been set contex is not valid");
-        return _graphics;
+        return _app;
     }
-  
-    public AwtContext graphics(Graphics g) {
-        _graphics = g;
+
+    public AppContext app(AppAwt app) {
+        _app = app;
         return this;
     }
 }

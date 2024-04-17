@@ -65,7 +65,7 @@ public class ToolbarListener implements Listener {
     public void mouseEntered(MouseEvent e) {
         Shape s = panel.getDraggedShape();
         if (s != null && !s.isNew()) {
-            toolbar.addButton(new ShapeButton(s.name(), (ShapeAwt) factory.createShape(s), (AppAwt) panel._app));
+            toolbar.addButton(new ShapeButton(s.name(), factory.createShape(s)));
             File file = new File(System.getProperty("user.dir") + "/toolbar.ser");
             try {
                 panel._app.backup(file.getAbsolutePath(), "Toolbar");

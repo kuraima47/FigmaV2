@@ -1,6 +1,7 @@
 package thibault.kuraima.core.awt.components.buttons;
 
 import thibault.kuraima.core.awt.application.AppAwt;
+import thibault.kuraima.core.awt.application.AppContext;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -9,7 +10,7 @@ import java.io.File;
 
 public class SaveButton extends Button{
 
-    public SaveButton(String text, AppAwt appAwt) {
+    public SaveButton(String text) {
         super(text);
         addActionListener(new ActionListener() {
             @Override
@@ -24,6 +25,7 @@ public class SaveButton extends Button{
                     if (!filePath.endsWith(".ser")) {
                         filePath += ".ser";
                     }
+                    AppAwt appAwt = AppContext.instance().app();
                     appAwt.backup(filePath, "Panel");
                 }
             }

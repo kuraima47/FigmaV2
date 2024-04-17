@@ -26,6 +26,8 @@ public class Toolbar extends JToolBar{
     }
 
     public void addButton(Button button) {
+        System.out.println("Adding button");
+        System.out.println(getComponents().length);
         if (getComponents().length > 4) {
             remove(getComponents().length - 1);
         }
