@@ -1,7 +1,7 @@
 package thibault.kuraima.core.awt.listeners;
 
 import thibault.kuraima.core.awt.application.AppAwt;
-import thibault.kuraima.core.awt.application.AppContext;
+import thibault.kuraima.core.awt.application.Singleton.AppContext;
 import thibault.kuraima.core.awt.components.buttons.ShapeButton;
 import thibault.kuraima.core.utils.Command.RemoveBtnCommand;
 
@@ -10,7 +10,6 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import java.io.IOException;
 
 public class ButtonListener implements Listener{
 

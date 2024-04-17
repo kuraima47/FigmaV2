@@ -2,7 +2,7 @@ package thibault.kuraima.core.awt.listeners;
 
 import thibault.kuraima.core.applications.App;
 import thibault.kuraima.core.awt.application.AppAwt;
-import thibault.kuraima.core.awt.application.AppContext;
+import thibault.kuraima.core.awt.application.Singleton.AppContext;
 import thibault.kuraima.core.utils.Command.*;
 
 import javax.swing.*;

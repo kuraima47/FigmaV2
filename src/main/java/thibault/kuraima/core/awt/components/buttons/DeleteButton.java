@@ -1,15 +1,12 @@
 package thibault.kuraima.core.awt.components.buttons;
 
 import thibault.kuraima.core.awt.application.AppAwt;
-import thibault.kuraima.core.awt.application.AppContext;
-import thibault.kuraima.core.awt.components.shapes.ShapeAwt;
+import thibault.kuraima.core.awt.application.Singleton.AppContext;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.Point2D;
-import java.awt.image.BufferedImage;
 
 public class DeleteButton extends Button{
 

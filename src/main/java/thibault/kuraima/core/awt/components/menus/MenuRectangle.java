@@ -1,8 +1,7 @@
 package thibault.kuraima.core.awt.components.menus;
 
 import thibault.kuraima.core.awt.application.AppAwt;
-import thibault.kuraima.core.awt.application.AppContext;
-import thibault.kuraima.core.awt.components.app.DrawingPanel;
+import thibault.kuraima.core.awt.application.Singleton.AppContext;
 import thibault.kuraima.core.utils.Command.*;
 
 import javax.swing.*;

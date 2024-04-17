@@ -1,7 +1,7 @@
 package thibault.kuraima.core.awt.components.buttons;
 
 import thibault.kuraima.core.awt.application.AppAwt;
-import thibault.kuraima.core.awt.application.AppContext;
+import thibault.kuraima.core.awt.application.Singleton.AppContext;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

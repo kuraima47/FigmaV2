@@ -1,7 +1,7 @@
 package thibault.kuraima.core.utils.Command;
 
 import thibault.kuraima.core.awt.application.AppAwt;
-import thibault.kuraima.core.awt.application.AppContext;
+import thibault.kuraima.core.awt.application.Singleton.AppContext;
 import thibault.kuraima.core.awt.components.shapes.ShapeAwt;
 
 public class CreateShapeCommand implements Command{

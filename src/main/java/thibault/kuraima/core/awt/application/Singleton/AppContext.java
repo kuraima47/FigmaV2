@@ -1,7 +1,8 @@
-package thibault.kuraima.core.awt.application;
+package thibault.kuraima.core.awt.application.Singleton;
+
+import thibault.kuraima.core.awt.application.AppAwt;
 
 import javax.management.RuntimeErrorException;
-import java.awt.*;
 
 /*
 * Singleton to share Graphics between all AWT implementation and to 

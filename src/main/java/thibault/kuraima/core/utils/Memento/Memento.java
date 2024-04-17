@@ -1,8 +1,7 @@
 package thibault.kuraima.core.utils.Memento;
 
 import thibault.kuraima.core.applications.App;
-import thibault.kuraima.core.awt.application.AppAwt;
-import thibault.kuraima.core.awt.application.AppContext;
+import thibault.kuraima.core.awt.application.Singleton.AppContext;
 
 import java.io.IOException;
 import java.io.Serializable;

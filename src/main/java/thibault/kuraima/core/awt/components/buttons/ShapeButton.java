@@ -1,7 +1,7 @@
 package thibault.kuraima.core.awt.components.buttons;
 
 import thibault.kuraima.core.awt.application.AppAwt;
-import thibault.kuraima.core.awt.application.AppContext;
+import thibault.kuraima.core.awt.application.Singleton.AppContext;
 import thibault.kuraima.core.awt.components.shapes.ShapeAwt;
 import thibault.kuraima.core.awt.listeners.ButtonListener;
 import thibault.kuraima.core.utils.Command.CreateShapeCommand;
