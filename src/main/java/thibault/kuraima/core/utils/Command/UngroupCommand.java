@@ -18,7 +18,6 @@ public class UngroupCommand implements Command{
     @Override
     public void execute() {
         panel.unGroupSelectedShapes();
-        panel.repaint();
     }
 
 }

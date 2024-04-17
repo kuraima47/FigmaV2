@@ -18,6 +18,5 @@ public class PasteCommand implements Command{
     @Override
     public void execute() {
         panel.pasteSelectedShape();
-        panel.repaint();
     }
 }

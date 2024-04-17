@@ -19,6 +19,5 @@ public class DuplicateCommand implements Command{
     @Override
     public void execute() {
         panel.duplicateSelectedShape();
-        panel.repaint();
     }
 }

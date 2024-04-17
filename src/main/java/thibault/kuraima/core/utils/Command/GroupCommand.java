@@ -18,6 +18,5 @@ public class GroupCommand implements Command{
     @Override
     public void execute() {
         panel.groupSelectedShapes();
-        panel.repaint();
     }
 }

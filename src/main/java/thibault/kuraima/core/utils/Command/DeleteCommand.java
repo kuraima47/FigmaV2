@@ -19,6 +19,5 @@ public class DeleteCommand implements Command {
     @Override
     public void execute() {
         panel.deleteSelectedShape();
-        panel.repaint();
     }
 }
