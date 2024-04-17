@@ -59,5 +59,11 @@ public class Toolbar extends JToolBar{
         revalidate();
         repaint();
     }
+
+    public void removeButton(Button button) {
+        remove(button);
+        revalidate();
+        repaint();
+    }
 };
 

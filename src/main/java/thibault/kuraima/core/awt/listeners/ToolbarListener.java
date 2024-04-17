@@ -1,11 +1,9 @@
 package thibault.kuraima.core.awt.listeners;
 
 
-import thibault.kuraima.core.awt.application.AppAwt;
 import thibault.kuraima.core.awt.components.app.DrawingPanel;
 import thibault.kuraima.core.awt.components.app.Toolbar;
 import thibault.kuraima.core.awt.components.buttons.ShapeButton;
-import thibault.kuraima.core.awt.components.shapes.ShapeAwt;
 import thibault.kuraima.core.components.Shape;
 import thibault.kuraima.core.utils.AbstractFactory.ShapeFactory;
 

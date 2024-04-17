@@ -3,6 +3,7 @@ package thibault.kuraima.core.awt.components.buttons;
 import thibault.kuraima.core.awt.application.AppAwt;
 import thibault.kuraima.core.awt.application.AppContext;
 import thibault.kuraima.core.awt.components.shapes.ShapeAwt;
+import thibault.kuraima.core.awt.listeners.ButtonListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -49,6 +50,8 @@ public class ShapeButton extends Button{
                 appAwt.execute();
             }
         });
+
+        addMouseListener(new ButtonListener(this));
     }
 
 
