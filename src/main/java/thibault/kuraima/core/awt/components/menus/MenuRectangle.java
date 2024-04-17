@@ -55,6 +55,7 @@ public class MenuRectangle implements Menu{
             @Override
             public void actionPerformed(ActionEvent e) {
                 panel.deleteSelectedShape();
+                panel._app.execute();
             }
         });
 
@@ -64,6 +65,7 @@ public class MenuRectangle implements Menu{
                 Color newColor = JColorChooser.showDialog(null, "Choose a color", panel.getSelectedShape().getColor());
                 panel.getSelectedShape().setColor(newColor);
                 panel.repaint();
+                panel._app.execute();
             }
         });
 
@@ -81,6 +83,7 @@ public class MenuRectangle implements Menu{
                         panel.getSelectedShape().setRotation(Double.parseDouble(tf3.getText()));
                         panel.repaint();
                         d.dispose();
+                        panel._app.execute();
                     }
                 });
                 JPanel p = new JPanel(new GridLayout(0, 1));
@@ -114,6 +117,7 @@ public class MenuRectangle implements Menu{
                         panel.getSelectedShape().size(new Point2D.Double(Double.parseDouble(tf.getText()), Double.parseDouble(tf2.getText())));
                         panel.repaint();
                         d.dispose();
+                        panel._app.execute();
                     }
                 });
                 JPanel p = new JPanel(new GridLayout(0, 1));
@@ -151,6 +155,7 @@ public class MenuRectangle implements Menu{
                         panel.getSelectedShape().setRound(new Point2D.Double(Double.parseDouble(tf.getText()), Double.parseDouble(tf2.getText())));
                         panel.repaint();
                         d.dispose();
+                        panel._app.execute();
                     }
                 });
                 JPanel p = new JPanel(new GridLayout(0, 1));
