@@ -8,7 +8,7 @@ public class CopyCommand implements Command{
 
     @Override
     public String getName() {
-        return null;
+        return "CopyCommand";
     }
 
     @Override

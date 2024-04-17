@@ -15,7 +15,7 @@ public class MoveCommand implements Command{
 
     @Override
     public String getName() {
-        return null;
+        return "MoveCommand";
     }
 
 

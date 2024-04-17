@@ -13,7 +13,7 @@ public class SizeCommand implements Command{
 
     @Override
     public String getName() {
-        return null;
+        return "SizeCommand : [" + size.getX() + ", " + size.getY()+"]";
     }
 
 

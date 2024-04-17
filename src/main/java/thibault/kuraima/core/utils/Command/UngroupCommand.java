@@ -8,7 +8,7 @@ public class UngroupCommand implements Command{
 
     @Override
     public String getName() {
-        return null;
+        return "UngroupCommand";
     }
 
     public void setPanel(DrawingPanel panel) {

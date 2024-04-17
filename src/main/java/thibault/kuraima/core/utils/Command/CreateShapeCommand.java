@@ -10,7 +10,7 @@ public class CreateShapeCommand implements Command{
 
     @Override
     public String getName() {
-        return null;
+        return "CreateShapeCommand";
     }
 
     @Override

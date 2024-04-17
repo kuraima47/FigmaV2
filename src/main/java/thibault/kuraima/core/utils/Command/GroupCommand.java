@@ -8,7 +8,7 @@ public class GroupCommand implements Command{
 
     @Override
     public String getName() {
-        return null;
+        return "GroupCommand";
     }
 
     public void setPanel(DrawingPanel panel) {

@@ -12,7 +12,7 @@ public class PasteCommand implements Command{
 
     @Override
     public String getName() {
-        return null;
+        return "PasteCommand";
     }
 
     @Override

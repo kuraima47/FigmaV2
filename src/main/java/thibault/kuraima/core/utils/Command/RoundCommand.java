@@ -21,7 +21,7 @@ public class RoundCommand implements Command{
 
     @Override
     public String getName() {
-        return null;
+        return "RoundCommand : [" + roundAngle.getX() + ", " + roundAngle.getY()+"]";
     }
 
     @Override

@@ -10,7 +10,7 @@ public class RemoveBtnCommand implements Command{
 
     @Override
     public String getName() {
-        return null;
+        return "RemoveBtnCommand";
     }
 
     public void setToolbar(Toolbar toolbar) {

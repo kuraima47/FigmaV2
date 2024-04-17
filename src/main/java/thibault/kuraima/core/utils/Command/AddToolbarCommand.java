@@ -19,7 +19,7 @@ public class AddToolbarCommand implements Command{
 
     @Override
     public String getName() {
-        return null;
+        return "AddToolbarCommand";
     }
 
     @Override

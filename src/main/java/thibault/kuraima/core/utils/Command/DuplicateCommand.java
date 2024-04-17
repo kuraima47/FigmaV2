@@ -13,7 +13,7 @@ public class DuplicateCommand implements Command{
 
     @Override
     public String getName() {
-        return null;
+        return "DuplicateCommand";
     }
 
     @Override

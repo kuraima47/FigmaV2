@@ -11,7 +11,7 @@ public class SidesCommand implements Command{
 
     @Override
     public String getName() {
-        return null;
+        return "SidesCommand : Change the number of sides of the selected polygon -> " + sides + " sides";
     }
 
 

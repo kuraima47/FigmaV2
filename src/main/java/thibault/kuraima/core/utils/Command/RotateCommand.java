@@ -10,7 +10,7 @@ public class RotateCommand implements Command{
 
     @Override
     public String getName() {
-        return null;
+        return "RotateCommand : " + angle + " degrees";
     }
 
     @Override
