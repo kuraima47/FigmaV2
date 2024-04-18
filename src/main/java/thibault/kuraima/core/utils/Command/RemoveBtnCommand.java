@@ -23,6 +23,6 @@ public class RemoveBtnCommand implements Command{
 
     @Override
     public void execute() {
-
+        this.toolbar.removeButton(this.btn);
     }
 }
