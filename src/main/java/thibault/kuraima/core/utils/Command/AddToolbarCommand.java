@@ -25,16 +25,12 @@ public class AddToolbarCommand implements Command{
     @Override
     public void execute() {
         Shape s = panel.getDraggedShape();
-        if (s != null && !s.isNew()) {
-            toolbar.addButton(new ShapeButton(s.name(), panel._app._factory.createShape(s)));
-            File file = new File(System.getProperty("user.dir") + "/toolbar.ser");
-            try {
-                panel._app.backup(file.getAbsolutePath(), "Toolbar");
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-            panel.deleteSelectedShape();
-        }
+        toolbar.addButton(new ShapeButton(s.name(), panel._app._factory.createShape(s)));
+        File file = new File(System.getProperty("user.dir") + "/toolbar.ser");
+        BackupCommand backup = new BackupCommand();
+        backup.setParams(file.getAbsolutePath(), "Toolbar");
+        backup.execute();
+        panel.deleteSelectedShape();
     }
 
 

@@ -1,4 +1,4 @@
-package thibault.kuraima.core.utils.AbstractFactory;
+package thibault.kuraima.core.utils.Factory.Shape;
 
 import thibault.kuraima.core.awt.components.shapes.ShapeAwt;
 import thibault.kuraima.core.components.Rectangle;

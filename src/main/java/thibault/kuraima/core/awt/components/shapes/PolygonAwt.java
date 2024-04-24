@@ -1,10 +1,12 @@
 package thibault.kuraima.core.awt.components.shapes;
 
+import thibault.kuraima.core.awt.application.Singleton.AppContext;
 import thibault.kuraima.core.awt.components.app.DrawingPanel;
 import thibault.kuraima.core.awt.components.menus.MenuPolygone;
 import thibault.kuraima.core.awt.components.menus.MenuRectangle;
 import thibault.kuraima.core.components.Polygon;
 import thibault.kuraima.core.components.Shape;
+import thibault.kuraima.core.utils.Prototype.IPrototype;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -197,7 +199,7 @@ public class PolygonAwt extends Polygon implements ShapeAwt{
     }
 
     @Override
-    public Shape copy() {
+    public IPrototype clone() {
         PolygonAwt e = new PolygonAwt(
                 new Point2D.Double(pos.getX(), pos.getY()),
                 new Point2D.Double(size.getX(), size.getY())
@@ -219,7 +221,7 @@ public class PolygonAwt extends Polygon implements ShapeAwt{
 
     @Override
     public JPopupMenu getMenu() {
-        return new MenuPolygone().create();
+        return AppContext.instance().app()._menuFactory.createMenuPolygone().create();
     }
 
     @Override

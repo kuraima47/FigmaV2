@@ -3,15 +3,12 @@ package thibault.kuraima.core.awt.listeners;
 
 import thibault.kuraima.core.awt.components.app.DrawingPanel;
 import thibault.kuraima.core.awt.components.app.Toolbar;
-import thibault.kuraima.core.awt.components.buttons.ShapeButton;
 import thibault.kuraima.core.components.Shape;
-import thibault.kuraima.core.utils.AbstractFactory.ShapeFactory;
+import thibault.kuraima.core.utils.Factory.Shape.ShapeFactory;
 import thibault.kuraima.core.utils.Command.AddToolbarCommand;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.io.IOException;
 
 public class ToolbarListener implements Listener {
 
@@ -62,10 +59,13 @@ public class ToolbarListener implements Listener {
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        AddToolbarCommand c = new AddToolbarCommand();
-        c.setToolbar(toolbar);
-        c.setPanel(panel);
-        panel._app.execute(c);
+        Shape s = panel.getDraggedShape();
+        if (s != null && !s.isNew()) {
+            AddToolbarCommand c = new AddToolbarCommand();
+            c.setToolbar(toolbar);
+            c.setPanel(panel);
+            panel._app.execute(c);
+        }
     }
 
     @Override

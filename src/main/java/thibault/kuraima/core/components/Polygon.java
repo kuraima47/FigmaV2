@@ -1,5 +1,7 @@
 package thibault.kuraima.core.components;
 
+import thibault.kuraima.core.utils.Prototype.IPrototype;
+
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.Arrays;
@@ -169,12 +171,6 @@ public abstract class Polygon implements Shape {
     }
 
     @Override
-    public Shape clone() {
-        try {
-            return (Shape) super.clone();
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+    public abstract IPrototype clone();
+
 }

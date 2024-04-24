@@ -22,7 +22,7 @@ public class ShapeButton extends Button{
         this.shape = awtShape;
         int width = 28;
         int height = 28;
-        ShapeAwt s = (ShapeAwt) shape.copy();
+        ShapeAwt s = (ShapeAwt) shape.clone();
         setPreferredSize(new Dimension(width, height));
         double aspectRatio = s.size().getX() / s.size().getY();
         double newWidth = height * aspectRatio;

@@ -1,10 +1,12 @@
 package thibault.kuraima.core.components;
 
+import thibault.kuraima.core.utils.Prototype.IPrototype;
+
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.io.Serializable;
 
-public interface Shape extends Cloneable, Serializable {
+public interface Shape extends IPrototype, Serializable {
 
     String name();
 
@@ -48,7 +50,4 @@ public interface Shape extends Cloneable, Serializable {
 
     void setRotationCenter(Point2D center);
 
-    Shape clone();
-
-    Shape copy();
 }

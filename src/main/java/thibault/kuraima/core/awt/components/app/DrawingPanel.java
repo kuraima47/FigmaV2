@@ -170,7 +170,7 @@ public class DrawingPanel extends JPanel implements Serializable {
     public void restore(DrawingPanel backup) {
         shapes = new ArrayList<>();
         for (ShapeAwt shape : backup.getAllShapes()) {
-            shapes.add((ShapeAwt) shape.copy());
+            shapes.add((ShapeAwt) shape.clone());
         }
         shapeCount = backup.shapeCount;
         actualiseShapeList();
@@ -178,7 +178,7 @@ public class DrawingPanel extends JPanel implements Serializable {
 
     public void duplicateSelectedShape() {
         if (selectedShape != null) {
-            ShapeAwt shape = (ShapeAwt) selectedShape.copy();
+            ShapeAwt shape = (ShapeAwt) selectedShape.clone();
             shape.setNew(true);
             shape.translate(new Point(25, 25));
             addShape(shape);
@@ -193,7 +193,7 @@ public class DrawingPanel extends JPanel implements Serializable {
 
     public void pasteSelectedShape() {
         if (copiedShape != null) {
-            ShapeAwt shape = (ShapeAwt) copiedShape.copy();
+            ShapeAwt shape = (ShapeAwt) copiedShape.clone();
             shape.setNew(true);
             shape.translate(new Point(25, 25));
             addShape(shape);

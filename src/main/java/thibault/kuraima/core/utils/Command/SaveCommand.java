@@ -26,7 +26,10 @@ public class SaveCommand implements Command{
             if (!filePath.endsWith(".ser")) {
                 filePath += ".ser";
             }
-            _app.backup(filePath, "Panel");
+
+            BackupCommand backupCommand = new BackupCommand();
+            backupCommand.setParams(filePath, "Panel");
+            backupCommand.execute();
         }
     }
 }

@@ -1,8 +1,10 @@
 package thibault.kuraima.core.awt.components.shapes;
 
+import thibault.kuraima.core.awt.application.Singleton.AppContext;
 import thibault.kuraima.core.awt.components.app.DrawingPanel;
 import thibault.kuraima.core.awt.components.menus.MenuGroup;
 import thibault.kuraima.core.components.Shape;
+import thibault.kuraima.core.utils.Prototype.IPrototype;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicGraphicsUtils;
@@ -177,7 +179,7 @@ public class Group implements ShapeAwt{
 
     @Override
     public JPopupMenu getMenu() {
-        return new MenuGroup().create();
+        return AppContext.instance().app()._menuFactory.createMenuGroup().create();
     }
 
     @Override
@@ -281,21 +283,10 @@ public class Group implements ShapeAwt{
     }
 
     @Override
-    public Shape clone() {
-        Shape s = null;
-        try {
-            s = (Shape) super.clone();
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
-        return s;
-    }
-
-    @Override
-    public Shape copy() {
+    public IPrototype clone() {
         Group g = new Group();
         for (ShapeAwt shape : shapes) {
-            g.addShape((ShapeAwt) shape.copy());
+            g.addShape((ShapeAwt) shape.clone());
         }
         if (color != null) {
             g.setColor(new Color(color.getRGB()));

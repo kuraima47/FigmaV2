@@ -1,9 +1,11 @@
 package thibault.kuraima.core.awt.components.shapes;
 
+import thibault.kuraima.core.awt.application.Singleton.AppContext;
 import thibault.kuraima.core.awt.components.app.DrawingPanel;
 import thibault.kuraima.core.awt.components.menus.MenuRectangle;
 import thibault.kuraima.core.components.Rectangle;
 import thibault.kuraima.core.components.Shape;
+import thibault.kuraima.core.utils.Prototype.IPrototype;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -179,7 +181,7 @@ public class RectangleAwt extends Rectangle implements ShapeAwt {
     }
 
     @Override
-    public Shape copy() {
+    public IPrototype clone() {
         RectangleAwt r = new RectangleAwt(
                 new Point2D.Double(pos.getX(), pos.getY()),
                 new Point2D.Double(size.getX(), size.getY())
@@ -199,7 +201,7 @@ public class RectangleAwt extends Rectangle implements ShapeAwt {
 
     @Override
     public JPopupMenu getMenu() {
-        return new MenuRectangle().create();
+        return AppContext.instance().app()._menuFactory.createMenuRectangle().create();
     }
 
     @Override

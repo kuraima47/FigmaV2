@@ -13,8 +13,10 @@ import thibault.kuraima.core.awt.listeners.AppListener;
 import thibault.kuraima.core.awt.listeners.DrawingListener;
 import thibault.kuraima.core.awt.components.app.Toolbar;
 import thibault.kuraima.core.awt.listeners.ToolbarListener;
-import thibault.kuraima.core.utils.AbstractFactory.ShapeFactory;
-import thibault.kuraima.core.utils.AbstractFactory.ShapeFactoryAwt;
+import thibault.kuraima.core.utils.Command.RestoreCommand;
+import thibault.kuraima.core.utils.Factory.Menu.FactoryMenu;
+import thibault.kuraima.core.utils.Factory.Shape.ShapeFactory;
+import thibault.kuraima.core.utils.Factory.Shape.ShapeFactoryAwt;
 import thibault.kuraima.core.utils.Command.Command;
 import thibault.kuraima.core.utils.Memento.History;
 import thibault.kuraima.core.utils.Memento.Memento;
@@ -35,9 +37,7 @@ public class AppAwt extends App implements Serializable {
 
     public AppAwt() {
         AppContext.instance().app(this);
-        if (_factory == null) {
-            _factory = createFactory();
-        }
+        createFactory();
         drawingPanel = new DrawingPanel();
         history = new History();
         createScene();
@@ -82,88 +82,11 @@ public class AppAwt extends App implements Serializable {
             drawingPanel.repaint();
     }
 
-    @Override
-    public String backup(String Path, String type) {
-        try {
-            if(Path == null) {
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                ObjectOutputStream oos = new ObjectOutputStream(baos);
-                if (type == null) {
-                    oos.writeObject(this);
-                } else if (type.equals("Panel")) {
-                    oos.writeObject(drawingPanel);
-                } else if (type.equals("Toolbar")) {
-                    oos.writeObject(toolbar);
-                }
-                oos.close();
-                version++;
-                return Base64.getEncoder().encodeToString(baos.toByteArray());
-            }else{
-                FileOutputStream fos = new FileOutputStream(Path);
-                ObjectOutputStream oos = new ObjectOutputStream(fos);
-                if (type == null) {
-                    oos.writeObject(this);
-                } else if (type.equals("Panel")) {
-                    oos.writeObject(drawingPanel);
-                } else if (type.equals("Toolbar")) {
-                    oos.writeObject(toolbar);
-                }
-                oos.close();
-                version++;
-                return "";
-            }
-        } catch (IOException e) {
-            return "";
-        }
-    }
-
-    @Override
-    public void restore(String backup, String type, String Path) {
-        try {
-            if (Path == null) {
-                byte[] data = Base64.getDecoder().decode(backup);
-                ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(data));
-                if (type == null){
-                    AppAwt app = (AppAwt) ois.readObject();
-                    this.drawingPanel.restore(app.drawingPanel);
-                    this.toolbar.restore(app.toolbar);
-                }
-                else if (type.equals("Panel")) {
-                    DrawingPanel panel = (DrawingPanel) ois.readObject();
-                    this.drawingPanel.restore(panel);
-                } else if (type.equals("Toolbar")) {
-                    Toolbar tool = (Toolbar) ois.readObject();
-                    this.toolbar.restore(tool);
-                }
-                ois.close();
-            }else{
-                FileInputStream fis = new FileInputStream(Path);
-                ObjectInputStream ois = new ObjectInputStream(fis);
-                if (type == null){
-                    AppAwt app = (AppAwt) ois.readObject();
-                    this.drawingPanel.restore(app.drawingPanel);
-                    this.toolbar.restore(app.toolbar);
-                }
-                else if (type.equals("Panel")) {
-                    DrawingPanel panel = (DrawingPanel) ois.readObject();
-                    this.drawingPanel.restore(panel);
-                } else if (type.equals("Toolbar")) {
-                    Toolbar tool = (Toolbar) ois.readObject();
-                    this.toolbar.restore(tool);
-                }
-                ois.close();
-            }
-        } catch (ClassNotFoundException e) {
-            System.out.println("ClassNotFoundException occurred.");
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            System.out.println("IOException occurred : " + e.getMessage());
-            throw new RuntimeException(e);
-        }
-    }
-
-    protected ShapeFactory createFactory() {
-        return new ShapeFactoryAwt();
+    protected void createFactory() {
+        if (_factory == null)
+            _factory = new ShapeFactoryAwt();
+        if (_menuFactory == null)
+            _menuFactory = new FactoryMenu();
     }
 
     private void createListeners(){
@@ -203,7 +126,9 @@ public class AppAwt extends App implements Serializable {
         File file = new File(System.getProperty("user.dir") + "/toolbar.ser");
         if (file.exists()) {
             try {
-                restore(null, "Toolbar", file.getAbsolutePath());
+                RestoreCommand restore = new RestoreCommand();
+                restore.setParams(null, "Toolbar", file.getAbsolutePath());
+                restore.execute();
             } catch (Exception e) {
                 addSaveLoadInToolbar();
                 addShapeInToolbar();

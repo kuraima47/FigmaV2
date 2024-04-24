@@ -43,7 +43,7 @@ public class Toolbar extends JToolBar{
         for(Component c : backup.getComponents()){
             if (c instanceof ShapeButton){
                 ShapeButton sb = (ShapeButton) c;
-                ShapeButton sb2 = new ShapeButton(sb.shape.name(), (ShapeAwt) sb.shape.copy());
+                ShapeButton sb2 = new ShapeButton(sb.shape.name(), (ShapeAwt) sb.shape.clone());
                 this.addButton(sb2);
             } else if (c instanceof LoadButton){
                 LoadButton lb = (LoadButton) c;

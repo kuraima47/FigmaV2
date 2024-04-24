@@ -2,6 +2,8 @@ package thibault.kuraima.core.utils.Memento;
 
 import thibault.kuraima.core.applications.App;
 import thibault.kuraima.core.awt.application.Singleton.AppContext;
+import thibault.kuraima.core.utils.Command.BackupCommand;
+import thibault.kuraima.core.utils.Command.RestoreCommand;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -13,15 +15,16 @@ public class Memento implements Serializable {
 
     public Memento() {
         _app = AppContext.instance().app();
-        try {
-            _backup = _app.backup(null, null);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        BackupCommand backupCommand = new BackupCommand();
+        backupCommand.execute();
+        _backup = backupCommand.result();
+        System.out.println("Backup: " + _backup);
     }
 
     public void restore() throws IOException {
-        _app.restore(_backup, null, null);
+        RestoreCommand restoreCommand = new RestoreCommand();
+        restoreCommand.setParams(_backup, null, null);
+        restoreCommand.execute();
     }
 }
 

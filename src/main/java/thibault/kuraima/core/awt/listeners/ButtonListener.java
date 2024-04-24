@@ -3,6 +3,8 @@ package thibault.kuraima.core.awt.listeners;
 import thibault.kuraima.core.awt.application.AppAwt;
 import thibault.kuraima.core.awt.application.Singleton.AppContext;
 import thibault.kuraima.core.awt.components.buttons.ShapeButton;
+import thibault.kuraima.core.utils.Command.BackupCommand;
+import thibault.kuraima.core.utils.Command.Command;
 import thibault.kuraima.core.utils.Command.RemoveBtnCommand;
 
 import javax.swing.*;
@@ -51,7 +53,9 @@ public class ButtonListener implements Listener{
                 c.setToolbar(app.toolbar);
                 app.execute(c);
                 File file = new File(System.getProperty("user.dir") + "/toolbar.ser");
-                app.backup(file.getAbsolutePath(), "Toolbar");
+                BackupCommand backup = new BackupCommand();
+                backup.setParams(file.getAbsolutePath(), "Toolbar");
+                backup.execute();
             });
             popupMenu.add(menuItem);
             popupMenu.show(app.toolbar, _btn.getX() + e.getX(), _btn.getY() + e.getY());

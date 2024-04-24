@@ -26,7 +26,9 @@ public class LoadCommand implements Command{
             if (!filePath.endsWith(".ser")) {
                 filePath += ".ser";
             }
-            _app.restore(null, "Panel", filePath);
+            RestoreCommand restoreCommand = new RestoreCommand();
+            restoreCommand.setParams(null, "Panel", filePath);
+            restoreCommand.execute();
         }
     }
 }
