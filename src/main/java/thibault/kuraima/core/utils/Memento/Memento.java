@@ -11,10 +11,8 @@ import java.io.Serializable;
 public class Memento implements Serializable {
 
     private String _backup;
-    private App _app;
 
     public Memento() {
-        _app = AppContext.instance().app();
         BackupCommand backupCommand = new BackupCommand();
         backupCommand.execute();
         _backup = backupCommand.result();
