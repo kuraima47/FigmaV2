@@ -12,7 +12,6 @@ public class History implements Serializable {
     private int virtualSize = 0;
 
     public void push(Command c, Memento m) {
-        System.out.println("Push : " + c.getName());
         if (virtualSize != history.size() && virtualSize > 0) {
             history = history.subList(0, virtualSize - 1);
         }

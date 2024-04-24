@@ -18,7 +18,6 @@ public class Memento implements Serializable {
         BackupCommand backupCommand = new BackupCommand();
         backupCommand.execute();
         _backup = backupCommand.result();
-        System.out.println("Backup: " + _backup);
     }
 
     public void restore() throws IOException {
