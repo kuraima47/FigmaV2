@@ -12,11 +12,15 @@ public class DeleteButton extends Button{
 
     public DeleteButton(String text) {
         super();
-        ImageIcon icon = new ImageIcon("src/main/resources/images/delete.png");
-        Image image = icon.getImage();
-        Image newimg = image.getScaledInstance(28, 28,  java.awt.Image.SCALE_SMOOTH);
-        icon = new ImageIcon(newimg);
-        setIcon(icon);
+        try {
+            ImageIcon icon = new ImageIcon("delete.png");
+            Image image = icon.getImage();
+            Image newimg = image.getScaledInstance(28, 28, java.awt.Image.SCALE_SMOOTH);
+            icon = new ImageIcon(newimg);
+            setIcon(icon);
+        }catch (Exception e){
+            setText(text);
+        }
         setBorderPainted(false);
         setFocusPainted(false);
         setContentAreaFilled(false);

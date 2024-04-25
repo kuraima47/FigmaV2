@@ -42,7 +42,7 @@ public class ButtonListener implements Listener{
         if (e.getButton() == MouseEvent.BUTTON3) {
             JPopupMenu popupMenu = new JPopupMenu();
             JMenuItem menuItem = new JMenuItem("Delete");
-            ImageIcon icon = new ImageIcon("src/main/resources/images/delete.png");
+            ImageIcon icon = new ImageIcon("delete.png");
             Image image = icon.getImage();
             Image newimg = image.getScaledInstance(15, 15,  java.awt.Image.SCALE_SMOOTH);
             icon = new ImageIcon(newimg);

@@ -35,7 +35,7 @@ public class MenuGroup implements Menu{
     }
 
     private void createItem(){
-        ImageIcon icon = new ImageIcon("src/main/resources/images/delete.png");
+        ImageIcon icon = new ImageIcon("delete.png");
         Image image = icon.getImage();
         Image newimg = image.getScaledInstance(16, 16,  java.awt.Image.SCALE_SMOOTH);
         icon = new ImageIcon(newimg);
