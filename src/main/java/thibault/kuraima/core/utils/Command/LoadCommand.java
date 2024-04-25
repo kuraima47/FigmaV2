@@ -30,5 +30,6 @@ public class LoadCommand implements Command{
             restoreCommand.setParams(null, "Panel", filePath);
             restoreCommand.execute();
         }
+        _app.drawingPanel.repaint();
     }
 }
