@@ -24,6 +24,8 @@ public class Group implements ShapeAwt{
     private boolean selected = true;
     private boolean dragged = false;
 
+    private Point2D lastPos = new Point2D.Double(0, 0);
+
     private int id;
     private Color color;
     private double rotation = 0;
@@ -121,7 +123,9 @@ public class Group implements ShapeAwt{
 
     @Override
     public boolean contains(int x, int y) {
-
+        if (rotationCenter == null) {
+            rotationCenter = new Point2D.Double((int)(pos.getX()), (int)(pos.getY()));
+        }
         double translatedX = x - rotationCenter.getX();
         double translatedY = y - rotationCenter.getY();
         double unrotatedX = translatedX * Math.cos(-rotation) - translatedY * Math.sin(-rotation);
@@ -344,6 +348,16 @@ public class Group implements ShapeAwt{
         };
 
         return rotatedCorners;
+    }
+
+    @Override
+    public void setNewLastPos() {
+        lastPos = new Point2D.Double(pos.getX(), pos.getY());
+    }
+
+    @Override
+    public Point2D getLastPos() {
+        return lastPos;
     }
 
 }

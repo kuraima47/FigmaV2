@@ -13,6 +13,7 @@ import thibault.kuraima.core.awt.listeners.AppListener;
 import thibault.kuraima.core.awt.listeners.DrawingListener;
 import thibault.kuraima.core.awt.components.app.Toolbar;
 import thibault.kuraima.core.awt.listeners.ToolbarListener;
+import thibault.kuraima.core.utils.Command.InitCommand;
 import thibault.kuraima.core.utils.Command.RestoreCommand;
 import thibault.kuraima.core.utils.Factory.Menu.FactoryMenu;
 import thibault.kuraima.core.utils.Factory.Shape.ShapeFactory;
@@ -45,6 +46,8 @@ public class AppAwt extends App implements Serializable {
         addKeyListener(appListener);
         requestFocus();
         restoreToolbar();
+        InitCommand init = new InitCommand();
+        execute(init);
     }
 
     @Override
@@ -66,8 +69,11 @@ public class AppAwt extends App implements Serializable {
 
     @Override
     public void execute(Command c) {
-        history.push(c, new Memento());
-        c.execute();
+        try {
+            c.execute();
+            history.push(c, new Memento());
+        }catch (Exception e){
+        }
     }
 
     @Override

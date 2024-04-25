@@ -208,4 +208,14 @@ public class RectangleAwt extends Rectangle implements ShapeAwt {
     public void unSelect() {
         selected = false;
     }
+
+    @Override
+    public void setNewLastPos() {
+        lastPos = new Point2D.Double(pos.getX(), pos.getY());
+    }
+
+    @Override
+    public Point2D getLastPos() {
+        return lastPos;
+    }
 }

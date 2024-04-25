@@ -5,6 +5,7 @@ import thibault.kuraima.core.components.Shape;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 public interface ShapeAwt extends Shape {
@@ -16,4 +17,7 @@ public interface ShapeAwt extends Shape {
 
     void unSelect();
 
+    void setNewLastPos();
+
+    Point2D getLastPos();
 }

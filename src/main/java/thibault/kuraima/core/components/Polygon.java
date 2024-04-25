@@ -21,6 +21,8 @@ public abstract class Polygon implements Shape {
 
     protected boolean dragged = true;
 
+    protected Point2D lastPos = new Point2D.Double(0, 0);
+
     protected int id;
 
     protected Point2D arcSize = new Point2D.Double(0, 0);

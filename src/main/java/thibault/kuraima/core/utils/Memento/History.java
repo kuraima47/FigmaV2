@@ -32,7 +32,7 @@ public class History implements Serializable {
         if (virtualSize == 0) {
             return null;
         }
-        virtualSize = Math.max(0, virtualSize - 2);
+        virtualSize = Math.max(0, virtualSize - 1);
         System.out.println("Undo : " + history.get(virtualSize).command.getName());
         return history.get(virtualSize).memento;
     }
@@ -50,7 +50,7 @@ public class History implements Serializable {
         if (virtualSize == history.size()) {
             return null;
         }
-        virtualSize = Math.min(history.size(), virtualSize + 2);
+        virtualSize = Math.min(history.size(), virtualSize + 1);
         System.out.println("Redo : " + history.get(virtualSize - 1).command.getName());
         return history.get(virtualSize - 1).memento;
     }
