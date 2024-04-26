@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch4jConfig>
+  <dontWrapJar>false</dontWrapJar>
+  <headerType>gui</headerType>
+  <jar>C:\Users\tpott\Documents\Cours\ArchLog\FigmaV2\target\FigmaV2-1.0-SNAPSHOT.jar</jar>
+  <outfile>C:\Users\tpott\Documents\Cours\ArchLog\FigmaV2\executable\FigmaV2.exe</outfile>
+  <errTitle></errTitle>
+  <cmdLine></cmdLine>
+  <chdir>.</chdir>
+  <priority>normal</priority>
+  <downloadUrl></downloadUrl>
+  <supportUrl></supportUrl>
+  <stayAlive>false</stayAlive>
+  <restartOnCrash>false</restartOnCrash>
+  <manifest></manifest>
+  <icon>C:\Users\tpott\Downloads\png-transparent-figma-app-logo-tech-companies-thumbnail-removebg-preview.ico</icon>
+  <classPath>
+    <mainClass>thibault.kuraima.Main</mainClass>
+    <cp>-cp</cp>
+  </classPath>
+  <jre>
+    <path>C:\Program Files\Java\jdk-21</path>
+    <requiresJdk>false</requiresJdk>
+    <requires64Bit>false</requires64Bit>
+    <minVersion>21</minVersion>
+    <maxVersion>22</maxVersion>
+  </jre>
+</launch4jConfig>

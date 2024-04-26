@@ -1,0 +1,20 @@
+
+
+Version:	3.50
+CmdLine:	C:\Users\tpott\Documents\Cours\ArchLog\FigmaV2\executable\FigmaV2.exe --l4j-debug
+JNI:		No
+WOW64:		Yes
+Working dir:	C:\Users\tpott\Documents\Cours\ArchLog\FigmaV2\executable\.
+Requires JDK:	No
+Requires 64-Bit: No
+Java min ver:	1.021.000
+Java max ver:	1.022.000
+JRE paths:	C:\Program Files\Java\jdk-21
+Check launcher:	C:\Program Files\Java\jdk-21\bin\javaw.exe (OK)
+Version string: 1.021.000_002 / 64-Bit (OK)
+Main class:	thibault.kuraima.Main
+Add classpath:	-cp
+Launcher:	C:\Program Files\Java\jdk-21\bin\javaw.exe
+Launcher args:	-classpath "C:\Users\tpott\Documents\Cours\ArchLog\FigmaV2\executable\FigmaV2.exe;-cp" thibault.kuraima.Main
+Args length:	108/32768 chars
+Exit code:	0
